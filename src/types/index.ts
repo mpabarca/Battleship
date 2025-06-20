@@ -4,13 +4,18 @@ export type DirectionType = "up" | "right" | "down" | "left";
 export type ShipSizeType = 4 | 5;
 
 export type CellType = {
-  shipId: number;
-  shot: boolean;
+  cellId: number;
   coordinates: CoordinatesType;
+  shot: boolean;
+  shipId: number | null;
 };
 
+export type GridLayoutType = CellType[][];
+
 export type GridType = {
-  layout: CellType | null [][];
+  layout: GridLayoutType;
+  ships: ShipType[];
+  sunkShips: ShipType[];
 };
 
 export type ShipType = {

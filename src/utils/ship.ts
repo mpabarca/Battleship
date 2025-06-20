@@ -72,6 +72,7 @@ export function generateFirstCell(shipsCreated: ShipType[]): CoordinatesType {
 
 export function generateShipCells(shipId: number, firstCell: CoordinatesType, size: ShipSizeType, direction: DirectionType, shipsCreated: ShipType[]): CellType[] | null {
   const cells: CellType[] = [{
+    cellId: parseInt(`${firstCell[0]}${firstCell[1]}`),
     shipId: shipId,
     shot: false,
     coordinates: firstCell,
@@ -80,6 +81,7 @@ export function generateShipCells(shipId: number, firstCell: CoordinatesType, si
   for (let i = 1; i < size; i++) {
     const nextCell: CoordinatesType | null = getNextShipCellCoordinates(firstCell, i, direction)
     if (nextCell && !existShipCellOverlap(shipsCreated, nextCell)) cells.push({
+      cellId: parseInt(`${nextCell[0]}${nextCell[1]}`),
       shipId: shipId,
       shot: false,
       coordinates: nextCell
