@@ -23,7 +23,7 @@ So are only need it at one level (or passed once to children).
 */
 
 function Game() {
-  const [target, setTarget] = useState<CoordinatesType>();
+  const [target, setTarget] = useState<CoordinatesType>([0,0]);
   const [grid, setGrid] = useState<GridType>();
 
   function handleFire(): void {
@@ -34,6 +34,7 @@ function Game() {
 
   function resetGame() {
     localStorage.removeItem("battleship-grid");
+    setTarget([0,0]);
     setGrid(generateGrid());
   }
 
@@ -64,7 +65,7 @@ function Game() {
             {grid.endGame ? (
               <div>END GAME</div>
             ) : (
-              <FireControl setTarget={setTarget} handleFire={handleFire} />
+              <FireControl target={target} setTarget={setTarget} handleFire={handleFire} />
             )}
           </div>
         </div>
