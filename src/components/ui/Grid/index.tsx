@@ -1,10 +1,13 @@
 import type { GridType } from "../../../types";
-import { generateGrid, GRID_SIZE } from "../../../utils/game";
+import { GRID_SIZE } from "../../../utils/game";
 import { ALPHABET, getConsecutivesIntArrayBySize } from "../../../utils/general";
 import Cell from "../Cell";
 
-function Grid () {
-  const grid: GridType = generateGrid()
+interface IGrid {
+  grid: GridType;
+}
+
+function Grid ({ grid }: IGrid) {
   const columnsHeader: number[] = getConsecutivesIntArrayBySize(GRID_SIZE[0])
 
   // grid-cols-10 => GRID_SIZE[0]

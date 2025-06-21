@@ -1,12 +1,12 @@
 import './App.css'
-import Grid from './components/ui/Grid'
+import Game from './components/Game'
 
 function App() {
 
   return (
-    <>
-      <Grid />
-    </>
+    <div className='flex flex-row items-center'>
+      <Game />
+    </div>
   )
 }
 
