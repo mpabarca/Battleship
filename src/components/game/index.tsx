@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Grid from "../ui/Grid"
 import FireControl from "../ui/FireControl"
-import type { GridType } from "../../types";
+import type { CoordinatesType, GridType } from "../../types";
 import { generateGrid } from "../../utils/game";
 
 /*
@@ -18,7 +18,7 @@ Handling Data accross project:
 */
 
 function Game() {
-  const [inputValue, setInputValue] = useState<string | undefined>("");
+  const [inputValue, setInputValue] = useState<CoordinatesType>();
   const [grid, setGrid] = useState<GridType>()
 
   function handleClick (): void {
@@ -38,7 +38,7 @@ function Game() {
       {grid ? 
         <div className='flex flex-row items-center gap-24'>
           <Grid grid={grid} />
-          <FireControl inputValue={inputValue} setInputValue={setInputValue} handleClick={handleClick} />
+          <FireControl setInputValue={setInputValue} handleClick={handleClick} />
         </div>
         : 
         <div>

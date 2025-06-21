@@ -1,5 +1,6 @@
 import type { CellType, GridLayoutType, GridType, ShipSizeType, ShipType } from "../types";
 import { generateCellBasedOnGrid } from "./cell";
+import { ALPHABET } from "./general";
 import { generateShip } from "./ship";
 
 export const SHIPS_SIZES: ShipSizeType[] = [5, 4, 4];
@@ -7,7 +8,7 @@ export const GRID_SIZE: [number, number] = [10, 10]; // [column X, row Y]
 
 /*
 RULES:
-1. Program creates a fix number of ships:
+✔ 1. Program creates a fix number of ships:
   - Within the range of the grid
   - Don't overlap to each other
   - With the following sizes:
@@ -16,7 +17,7 @@ RULES:
 
 => generateShip(): ShipType
 
-2. Program creates 10 x 10 grid:
+✔ 2. Program creates 10 x 10 grid:
   - Columns A -> J where A: 1 , B: 2, ..., J: 10
   - Rows 1 -> 10
   - Places/stores the created ships
@@ -39,6 +40,10 @@ RULES:
   - sunkShips.length = ships.length => GAME ENDS! USER WINS!
   - sunkShips.length < ships.length => repeat step 3
 */
+
+export function transformLetterToNumber(letter: string): number{
+  return ALPHABET.indexOf(letter.toUpperCase()) + 1
+}
 
 export function generateGrid(): GridType {
   const ships: ShipType[] = []
