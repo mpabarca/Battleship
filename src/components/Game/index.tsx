@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Grid from "../ui/Grid"
 import FireControl from "../ui/FireControl"
 import type { CoordinatesType, GridType } from "../../types";
@@ -25,23 +25,21 @@ function Game() {
   function handleFire (): void {
     if(target && grid && hasCellBeenShot(target, grid?.layout)) console.log("cell has been shot previously!")
     if(target && grid) setGrid(getShotResult(grid, target))
-    
   }
-
-  useEffect(() => {
-    setGrid(generateGrid())
-  }, [])
 
   return (
     <>
       {grid ? 
-        <div className='flex flex-row items-center gap-20'>
+        <div className='flex flex-row h-full gap-20'>
           <Grid grid={grid} />
-          {grid.endGame ? <div>END GAME</div> : <FireControl setTarget={setTarget} handleFire={handleFire} />}
+          <div className="flex flex-col h-full gap-20 justify-between">
+            <button type="button" onClick={() => setGrid(generateGrid())}>Reset game</button>
+            {grid.endGame ? <div>END GAME</div> : <FireControl setTarget={setTarget} handleFire={handleFire} />}
+          </div>
         </div>
         : 
-        <div>
-          Loading new grid ...
+        <div className='flex flex-row items-center gap-20'>
+          <button type="button" onClick={() => setGrid(generateGrid())}>Start game</button>
         </div>
       }
     </>

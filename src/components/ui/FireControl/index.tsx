@@ -104,7 +104,7 @@ function FireControl({ setTarget, handleFire }: IFireControl) {
   }, [setTarget, value]);
 
   return (
-    <div className="flex flex-col gap-10 w-52">
+    <div className="flex flex-col gap-10 w-52 h-full">
       <div className='flex gap-2 items-center justify-between'>
         <div className="flex gap-4 h-12">
           <input
