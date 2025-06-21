@@ -1,5 +1,5 @@
-import type { CellType, GridLayoutType, GridType, ShipSizeType, ShipType } from "../types";
-import { generateCellBasedOnGrid } from "./cell";
+import type { CellType, CoordinatesType, GridLayoutType, GridType, ShipSizeType, ShipType } from "../types";
+import { generateCellBasedOnGrid, sameCells } from "./cell";
 import { ALPHABET } from "./general";
 import { generateShip } from "./ship";
 
@@ -68,6 +68,34 @@ export function generateGrid(): GridType {
   return {
     layout: grid,
     ships,
-    sunkShips: []
+    sunkShips: [],
+    endGame: false,
   };
+}
+
+export function getShotResult(grid: GridType, shotCoordinates: CoordinatesType): GridType {
+  const gridAfterImpact: GridType = structuredClone(grid);
+  const cellAfterImpact :CellType = gridAfterImpact.layout[shotCoordinates[1] - 1][shotCoordinates[0] - 1]
+  cellAfterImpact.shot = true;
+  
+  console.log('gridAfterImpact', gridAfterImpact)
+  console.log('shotCoordinates', shotCoordinates)
+  console.log('cellAfterImpact', cellAfterImpact)
+
+  if(cellAfterImpact.shipId) {
+    console.log("shoot on a ship!!")
+    const shipAfterImpact: ShipType = gridAfterImpact.ships[cellAfterImpact.shipId - 1]
+    for(let i = 0; i < shipAfterImpact.cells.length; i++) {
+      if(sameCells(shotCoordinates, shipAfterImpact.cells[i].coordinates)) shipAfterImpact.cells[i].shot = true;
+    }
+    shipAfterImpact.shotCounter++;
+
+    if(shipAfterImpact.shotCounter === shipAfterImpact.length) {
+      shipAfterImpact.sunk = true
+      gridAfterImpact.sunkShips.push(shipAfterImpact)
+      if(gridAfterImpact.sunkShips.length === gridAfterImpact.ships.length) gridAfterImpact.endGame = true;
+    }
+  }
+
+  return gridAfterImpact;
 }

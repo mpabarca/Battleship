@@ -8,18 +8,18 @@ type InputType = {
 };
 
 interface IFireControl {
-  setInputValue: React.Dispatch<
+  setTarget: React.Dispatch<
     React.SetStateAction<CoordinatesType | undefined>
   >;
   handleClick: () => void;
 }
 
-function FireControl({ setInputValue, handleClick }: IFireControl) {
+function FireControl({ setTarget, handleClick }: IFireControl) {
   const [value, setvalue] = useState<InputType>({
     inputColumn: "",
     inputRow: "",
   });
-  
+
   function handleChange(e: React.FormEvent<HTMLInputElement>): void {
     const { name, value: newValue } = e.currentTarget;
     setvalue((prev) => ({
@@ -29,11 +29,11 @@ function FireControl({ setInputValue, handleClick }: IFireControl) {
   }
 
   useEffect(() => {
-    setInputValue([
+    setTarget([
       transformLetterToNumber(value.inputColumn),
       parseInt(value.inputRow),
     ]);
-  }, [setInputValue, value]);
+  }, [setTarget, value]);
 
   return (
     <div className='flex gap-2 items-center'>

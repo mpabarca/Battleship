@@ -1,6 +1,7 @@
 import type {
   CellType,
   CoordinatesType,
+  GridLayoutType,
   ShipType,
 } from "../types";
 import { getCellShipId } from "./ship";
@@ -16,4 +17,8 @@ export function generateCellBasedOnGrid( cellCoordinates: CoordinatesType, ships
     shot: false,
     shipId: getCellShipId(ships, cellCoordinates),
   }
+}
+
+export function hasCellBeenShot(cell: CoordinatesType, grid: GridLayoutType): boolean {
+  return grid[cell[1] - 1][cell[0] - 1].shot
 }
