@@ -1,6 +1,5 @@
 import type { GridType } from "../../../types";
-import { GRID_SIZE } from "../../../utils/game";
-import { ALPHABET, getConsecutivesIntArrayBySize } from "../../../utils/general";
+import { COLUMNS_HEADER, ROWS_HEADER } from "../../../utils/game";
 import Cell from "../Cell";
 
 interface IGrid {
@@ -8,8 +7,6 @@ interface IGrid {
 }
 
 function Grid ({ grid }: IGrid) {
-  const columnsHeader: number[] = getConsecutivesIntArrayBySize(GRID_SIZE[0])
-
   // grid-cols-10 => GRID_SIZE[0]
   // grid-rows-10 => GRID_SIZE[1]
 
@@ -19,20 +16,19 @@ function Grid ({ grid }: IGrid) {
         <div className="w-14 h-14">
           {""}
         </div>
-          {columnsHeader.map((col) => (
-            <div key={`${col}-header`} className="w-14 h-14 flex justify-center items-center">
-              {col}
+          {ROWS_HEADER.map((row) => (
+            <div key={`${row}-header`} className="w-14 h-14 flex justify-center items-center">
+              {row}
             </div>
           ))}
       </div>
       <div className="flex flex-col">
         <div className="flex flex-row">
-                  {grid.layout.map((_, rowIndex) => (
-          <div key={`${rowIndex}-header`} className="h-14 w-14 flex justify-center items-center">
-            {ALPHABET[rowIndex]}
-          </div>
-          ))
-        }
+          {COLUMNS_HEADER.map((col) => (
+            <div key={`${col}-header`} className="h-14 w-14 flex justify-center items-center">
+              {col}
+            </div>
+          ))}
         </div>
         <div className="grid grid-rows-10 border border-zinc-600">
           {grid.layout.map((row, rowIndex) => (
@@ -43,21 +39,20 @@ function Grid ({ grid }: IGrid) {
           }
         </div>
         <div className="flex flex-row">
-          {grid.layout.map((_, rowIndex) => (
-            <div key={`${rowIndex}-header`} className="h-14 w-14 flex justify-center items-center">
-              {ALPHABET[rowIndex]}
+          {COLUMNS_HEADER.map((col) => (
+            <div key={`${col}-header`} className="h-14 w-14 flex justify-center items-center">
+              {col}
             </div>
-            ))
-          }
+          ))}
         </div>
       </div>
       <div>
         <div className="w-14 h-14">
           {""}
         </div>
-        {columnsHeader.map((col) => (
-          <div key={`${col}-header`} className="w-14 h-14 flex justify-center items-center">
-            {col}
+        {ROWS_HEADER.map((row) => (
+          <div key={`${row}-header`} className="w-14 h-14 flex justify-center items-center">
+            {row}
           </div>
         ))}
       </div>

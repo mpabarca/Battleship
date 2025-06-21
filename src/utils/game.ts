@@ -1,10 +1,13 @@
 import type { CellType, CoordinatesType, GridLayoutType, GridType, ShipSizeType, ShipType } from "../types";
 import { generateCellBasedOnGrid, sameCells } from "./cell";
-import { ALPHABET } from "./general";
+import { ALPHABET, getConsecutivesIntArrayBySize } from "./general";
 import { generateShip } from "./ship";
 
 export const SHIPS_SIZES: ShipSizeType[] = [5, 4, 4];
 export const GRID_SIZE: [number, number] = [10, 10]; // [column X, row Y]
+
+export const ROWS_HEADER: number[] = getConsecutivesIntArrayBySize(GRID_SIZE[0])
+export const COLUMNS_HEADER: string[] = ALPHABET.slice(0, GRID_SIZE[0])
 
 /*
 RULES:
