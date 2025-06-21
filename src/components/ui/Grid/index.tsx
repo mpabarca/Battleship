@@ -19,20 +19,20 @@ function Grid ({ grid }: IGrid) {
         <div className="w-14 h-14">
           {""}
         </div>
-        {grid.layout.map((_, rowIndex) => (
-          <div key={`${rowIndex}-header`} className="h-14 w-14 flex justify-center items-center">
-            {ALPHABET[rowIndex]}
-          </div>
-          ))
-        }
-      </div>
-      <div className="flex flex-col">
-        <div className="flex flex-row">
           {columnsHeader.map((col) => (
             <div key={`${col}-header`} className="w-14 h-14 flex justify-center items-center">
               {col}
             </div>
           ))}
+      </div>
+      <div className="flex flex-col">
+        <div className="flex flex-row">
+                  {grid.layout.map((_, rowIndex) => (
+          <div key={`${rowIndex}-header`} className="h-14 w-14 flex justify-center items-center">
+            {ALPHABET[rowIndex]}
+          </div>
+          ))
+        }
         </div>
         <div className="grid grid-rows-10 border border-zinc-600">
           {grid.layout.map((row, rowIndex) => (
@@ -43,23 +43,23 @@ function Grid ({ grid }: IGrid) {
           }
         </div>
         <div className="flex flex-row">
-          {columnsHeader.map((col) => (
-            <div key={`${col}-header`} className="w-14 h-14 flex justify-center items-center">
-              {col}
+          {grid.layout.map((_, rowIndex) => (
+            <div key={`${rowIndex}-header`} className="h-14 w-14 flex justify-center items-center">
+              {ALPHABET[rowIndex]}
             </div>
-          ))}
+            ))
+          }
         </div>
       </div>
       <div>
         <div className="w-14 h-14">
           {""}
         </div>
-        {grid.layout.map((_, rowIndex) => (
-          <div key={`${rowIndex}-header`} className="h-14 w-14 flex justify-center items-center">
-            {ALPHABET[rowIndex]}
+        {columnsHeader.map((col) => (
+          <div key={`${col}-header`} className="w-14 h-14 flex justify-center items-center">
+            {col}
           </div>
-          ))
-        }
+        ))}
       </div>
     </div>
   )
