@@ -22,8 +22,7 @@ function Game() {
   const [target, setTarget] = useState<CoordinatesType>();
   const [grid, setGrid] = useState<GridType>()
 
-  function handleClick (): void {
-    console.log("in handleClick", target)
+  function handleFire (): void {
     if(target && grid && hasCellBeenShot(target, grid?.layout)) console.log("cell has been shot previously!")
     if(target && grid) setGrid(getShotResult(grid, target))
     
@@ -33,16 +32,12 @@ function Game() {
     setGrid(generateGrid())
   }, [])
 
-  useEffect(() => {
-    console.log('target', target)
-  }, [target])
-
   return (
     <>
       {grid ? 
-        <div className='flex flex-row items-center gap-24'>
+        <div className='flex flex-row items-center gap-20'>
           <Grid grid={grid} />
-          {grid.endGame ? <div>END GAME</div> : <FireControl setTarget={setTarget} handleClick={handleClick} />}
+          {grid.endGame ? <div>END GAME</div> : <FireControl setTarget={setTarget} handleFire={handleFire} />}
         </div>
         : 
         <div>

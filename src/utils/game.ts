@@ -25,11 +25,11 @@ RULES:
   - Rows 1 -> 10
   - Places/stores the created ships
 
-3. The game is a one-sided game where: 
+✔ 3. The game is a one-sided game where: 
   - Is play by a single human
   - Enters a coordinate on input field like A5 => [1,5]
 
-4. Program check:
+✔ 4. Program check:
   - Input/coordinates has previously called => YOU ALREADY TRIED THIS COORDINATES, TRY AGAIN!
   - Input/coordinates called first time
     - Input !== some ship cell's coordinates => MISSES!
@@ -39,7 +39,7 @@ RULES:
         - ship.sunk = true => SINK!
         - sunkShips.push(ship)
 
-5. Program check:
+✔ 5. Program check:
   - sunkShips.length = ships.length => GAME ENDS! USER WINS!
   - sunkShips.length < ships.length => repeat step 3
 */
@@ -81,10 +81,6 @@ export function getShotResult(grid: GridType, shotCoordinates: CoordinatesType):
   const cellAfterImpact :CellType = gridAfterImpact.layout[shotCoordinates[1] - 1][shotCoordinates[0] - 1]
   cellAfterImpact.shot = true;
   
-  console.log('gridAfterImpact', gridAfterImpact)
-  console.log('shotCoordinates', shotCoordinates)
-  console.log('cellAfterImpact', cellAfterImpact)
-
   if(cellAfterImpact.shipId) {
     console.log("shoot on a ship!!")
     const shipAfterImpact: ShipType = gridAfterImpact.ships[cellAfterImpact.shipId - 1]
