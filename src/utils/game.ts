@@ -1,5 +1,6 @@
 import type { CellType, CoordinatesType, GridLayoutType, GridType, ShipSizeType, ShipType } from "../types";
-import { generateShip, sameCells } from "./ship";
+import { sameCells } from "./cell";
+import { generateShip } from "./ship";
 
 const SHIPS_SIZES: ShipSizeType[] = [5, 4, 4]
 /*
@@ -36,25 +37,6 @@ RULES:
   - sunkShips.length = ships.length => GAME ENDS! USER WINS!
   - sunkShips.length < ships.length => repeat step 3
 */
-
-export function getCellShipId(ships: ShipType[], cellCoordinates: CoordinatesType): number | null {
-  for(let i = 0; i < ships.length; i++) {
-    for(let j = 0; j < ships[i].cells.length; j++){
-      if(sameCells(cellCoordinates, ships[i].cells[j].coordinates)) return ships[i].shipId
-    }
-  }
-
-  return null
-}
-
-export function generateCell( cellCoordinates: CoordinatesType, ships: ShipType[]): CellType {
-  return {
-    cellId: parseInt(`${cellCoordinates[0]}${cellCoordinates[1]}`),
-    coordinates: cellCoordinates,
-    shot: false,
-    shipId: getCellShipId(ships, cellCoordinates),
-  }
-}
 
 export function generateGrid(): GridType {
   const ships: ShipType[] = []

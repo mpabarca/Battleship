@@ -5,6 +5,8 @@ import type {
   DirectionType,
   ShipSizeType,
 } from "../types";
+import { sameCells } from "./cell";
+import { getRandomInt, shuffleArray } from "./general";
 const DIRECTIONS: DirectionType[] = ["up", "right", "down", "left"]
 // const ORIENTATIONS: OrientationType[] = ["horizontal", "vertical"];
 
@@ -21,22 +23,14 @@ The grid is an 1-indexed grid (1–10) NOT 0-indexed board (0–9)
 
 */
 
-export function getRandomInt(min: number, max: number): number {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-export function shuffleArray(array: DirectionType[] | []): DirectionType[] | [] {
-  for(let i = 0; i < array.length; i++){
-    const randomIndex = getRandomInt(0, array.length - 1)
-    const copyArray = [...array]
-    array[i] = copyArray[randomIndex]
-    array[randomIndex] = copyArray[i]
+export function getCellShipId(ships: ShipType[], cellCoordinates: CoordinatesType): number | null {
+  for(let i = 0; i < ships.length; i++) {
+    for(let j = 0; j < ships[i].cells.length; j++){
+      if(sameCells(cellCoordinates, ships[i].cells[j].coordinates)) return ships[i].shipId
+    }
   }
-  return array
-}
 
-export function sameCells(cell1: CoordinatesType, cell2: CoordinatesType) {
-  return cell1[0] === cell2[0] && cell1[1] === cell2[1]
+  return null
 }
 
 export function existShipCellOverlap(shipsCreated: ShipType[], newShipCell: CoordinatesType): boolean {
