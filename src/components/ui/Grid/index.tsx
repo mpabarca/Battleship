@@ -1,11 +1,14 @@
 import type { GridType } from "../../../types";
-import { generateGrid, GRID_SIZE } from "../../../utils/game";
-import { ALPHABET, getConsecutivesIntArrayBySize } from "../../../utils/general";
+import { COLUMNS_HEADER, ROWS_HEADER } from "../../../utils/game";
 import Cell from "../Cell";
 
-function Grid () {
-  const grid: GridType = generateGrid()
-  const columnsHeader: number[] = getConsecutivesIntArrayBySize(GRID_SIZE[0])
+interface IGrid {
+  grid: GridType;
+}
+
+function Grid ({ grid }: IGrid) {
+  // grid-cols-10 => GRID_SIZE[0]
+  // grid-rows-10 => GRID_SIZE[1]
 
   return(
     <div className="flex border border-zinc-600 p-14">
@@ -13,17 +16,16 @@ function Grid () {
         <div className="w-14 h-14">
           {""}
         </div>
-        {grid.layout.map((_, rowIndex) => (
-          <div key={`${rowIndex}-header`} className="h-14 w-14 flex justify-center items-center">
-            {ALPHABET[rowIndex]}
-          </div>
-          ))
-        }
+          {ROWS_HEADER.map((row) => (
+            <div key={`${row}-header`} className="w-14 h-14 flex justify-center items-center">
+              {row}
+            </div>
+          ))}
       </div>
       <div className="flex flex-col">
         <div className="flex flex-row">
-          {columnsHeader.map((col) => (
-            <div key={`${col}-header`} className="w-14 h-14 flex justify-center items-center">
+          {COLUMNS_HEADER.map((col) => (
+            <div key={`${col}-header`} className="h-14 w-14 flex justify-center items-center">
               {col}
             </div>
           ))}
@@ -37,8 +39,8 @@ function Grid () {
           }
         </div>
         <div className="flex flex-row">
-          {columnsHeader.map((col) => (
-            <div key={`${col}-header`} className="w-14 h-14 flex justify-center items-center">
+          {COLUMNS_HEADER.map((col) => (
+            <div key={`${col}-header`} className="h-14 w-14 flex justify-center items-center">
               {col}
             </div>
           ))}
@@ -48,12 +50,11 @@ function Grid () {
         <div className="w-14 h-14">
           {""}
         </div>
-        {grid.layout.map((_, rowIndex) => (
-          <div key={`${rowIndex}-header`} className="h-14 w-14 flex justify-center items-center">
-            {ALPHABET[rowIndex]}
+        {ROWS_HEADER.map((row) => (
+          <div key={`${row}-header`} className="w-14 h-14 flex justify-center items-center">
+            {row}
           </div>
-          ))
-        }
+        ))}
       </div>
     </div>
   )

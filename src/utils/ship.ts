@@ -58,8 +58,7 @@ export function getNextShipCellCoordinates(
 }
 
 export function generateFirstCell(shipsCreated: ShipType[]): CoordinatesType {
-  let firstCell: CoordinatesType = [getRandomInt(1, GRID_SIZE[1]), getRandomInt(1, GRID_SIZE[0])];
-  while (existShipCellOverlap(shipsCreated, firstCell)) {
+let firstCell: CoordinatesType = [getRandomInt(1, GRID_SIZE[0]), getRandomInt(1, GRID_SIZE[1])];  while (existShipCellOverlap(shipsCreated, firstCell)) {
       firstCell = [getRandomInt(1, GRID_SIZE[0]), getRandomInt(1, GRID_SIZE[1])];
   }
   return firstCell
@@ -125,7 +124,6 @@ export function generateShip (shipId: number, size: ShipSizeType, shipsCreated: 
       }
     }
   }
-
 
   return {
     shipId: shipId,
