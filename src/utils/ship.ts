@@ -6,6 +6,7 @@ import type {
   ShipSizeType,
 } from "../types";
 import { sameCells } from "./cell";
+import { GRID_SIZE } from "./game";
 import { getRandomInt, shuffleArray } from "./general";
 const DIRECTIONS: DirectionType[] = ["up", "right", "down", "left"]
 // const ORIENTATIONS: OrientationType[] = ["horizontal", "vertical"];
@@ -48,18 +49,18 @@ export function getNextShipCellCoordinates(
   if (direction === "up") {
     return firstCell[1] - index > 0 ? [firstCell[0], firstCell[1] - index] : null;
   } else if (direction === "down") {
-    return firstCell[1] + index <= 10 ? [firstCell[0], firstCell[1] + index] : null;
+    return firstCell[1] + index <= GRID_SIZE[1] ? [firstCell[0], firstCell[1] + index] : null;
   } else if (direction === "right") {
-    return firstCell[0] + index <= 10 ? [firstCell[0] + index, firstCell[1]] : null;
+    return firstCell[0] + index <= GRID_SIZE[0] ? [firstCell[0] + index, firstCell[1]] : null;
   } else {
     return firstCell[0] - index > 0 ? [firstCell[0] - index, firstCell[1]] : null;
   }
 }
 
 export function generateFirstCell(shipsCreated: ShipType[]): CoordinatesType {
-  let firstCell: CoordinatesType = [getRandomInt(1, 10), getRandomInt(1, 10)];
+  let firstCell: CoordinatesType = [getRandomInt(1, GRID_SIZE[1]), getRandomInt(1, GRID_SIZE[0])];
   while (existShipCellOverlap(shipsCreated, firstCell)) {
-      firstCell = [getRandomInt(1, 10), getRandomInt(1, 10)];
+      firstCell = [getRandomInt(1, GRID_SIZE[0]), getRandomInt(1, GRID_SIZE[1])];
   }
   return firstCell
 }

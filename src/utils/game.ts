@@ -1,8 +1,10 @@
-import type { CellType, CoordinatesType, GridLayoutType, GridType, ShipSizeType, ShipType } from "../types";
-import { sameCells } from "./cell";
+import type { CellType, GridLayoutType, GridType, ShipSizeType, ShipType } from "../types";
+import { generateCellBasedOnGrid } from "./cell";
 import { generateShip } from "./ship";
 
-const SHIPS_SIZES: ShipSizeType[] = [5, 4, 4]
+export const SHIPS_SIZES: ShipSizeType[] = [5, 4, 4];
+export const GRID_SIZE: [number, number] = [10, 10]; // [column X, row Y]
+
 /*
 RULES:
 1. Program creates a fix number of ships:
@@ -49,10 +51,10 @@ export function generateGrid(): GridType {
   })
 
   // 2. Program creates 10 x 10 grid
-  for(let rowIndex = 1; rowIndex <= 10; rowIndex++){
+  for(let rowIndex = 1; rowIndex <= GRID_SIZE[1]; rowIndex++){
     const row: CellType[] = [];
-    for(let columnIndex = 1; columnIndex <= 10; columnIndex++){
-      const cell: CellType = generateCell([rowIndex,columnIndex], ships);
+    for(let columnIndex = 1; columnIndex <= GRID_SIZE[0]; columnIndex++){
+      const cell: CellType = generateCellBasedOnGrid([rowIndex,columnIndex], ships);
       row.push(cell)
     }
     grid.push(row)
