@@ -7,6 +7,9 @@ function Grid () {
   const grid: GridType = generateGrid()
   const columnsHeader: number[] = getConsecutivesIntArrayBySize(GRID_SIZE[0])
 
+  // grid-cols-10 => GRID_SIZE[0]
+  // grid-rows-10 => GRID_SIZE[1]
+
   return(
     <div className="flex border border-zinc-600 p-14">
       <div>
