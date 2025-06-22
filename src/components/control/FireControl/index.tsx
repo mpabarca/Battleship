@@ -1,27 +1,21 @@
-import { useEffect, useState } from "react";
-import type { CoordinatesType } from "../../../types";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { CoordinatesType, ErrorType, GridType } from "../../../types";
 import {
   COLUMNS_HEADER,
   ROWS_HEADER,
   transformLetterToNumber,
 } from "../../../utils/game";
-import ErrorMessage from "../ErrorMessage";
 
 type InputType = {
   inputColumn: string;
   inputRow: string;
 };
 
-type ErrorType = {
-  columnCriteria: boolean;
-  rowCriteria: boolean;
-  emptyField: boolean;
-};
-
 interface IFireControl {
   target: CoordinatesType | [0, 0];
   setTarget: React.Dispatch<React.SetStateAction<CoordinatesType>>;
   handleFire: () => void;
+  setGrid: React.Dispatch<React.SetStateAction<GridType | null>>;
 }
 
 const initialValues: InputType = {
@@ -29,13 +23,23 @@ const initialValues: InputType = {
     inputRow: "",
   }
 
-function FireControl({ target, setTarget, handleFire }: IFireControl) {
+function FireControl({ target, setTarget, handleFire, setGrid }: IFireControl) {
   const [value, setValue] = useState<InputType>(initialValues);
-  const [errors, setErrors] = useState<ErrorType>({
-    columnCriteria: false,
-    rowCriteria: false,
-    emptyField: false,
-  });
+  const rowInputRef = useRef<HTMLInputElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null)
+
+  // memoize handleErrors to only update single error type on grid
+  const handleErrors = useCallback((updates: Partial<ErrorType>) => {
+    setGrid((prev) => {
+      if(!prev) return prev;
+      return {
+      ...prev,
+      errors: {
+        ...prev.errors,
+        ...updates
+      }
+    }})
+  }, [setGrid])
 
   function handleChange(e: React.FormEvent<HTMLInputElement>): void {
     const { name, value: newValue } = e.currentTarget;
@@ -53,19 +57,14 @@ function FireControl({ target, setTarget, handleFire }: IFireControl) {
       if (COLUMNS_HEADER.includes(upperValue)) {
         const updated = { ...value, inputColumn: upperValue };
         setValue(updated);
-        setErrors((prev) => ({
-          ...prev,
-          columnCriteria: false,
-        }));
+        handleErrors({ columnCriteria: false })
         setTarget([
           transformLetterToNumber(updated.inputColumn),
           updated.inputRow ? parseInt(updated.inputRow) : 0,
         ]);
+        rowInputRef.current?.focus();
       } else {
-        setErrors((prev) => ({
-          ...prev,
-          columnCriteria: true,
-        }));
+        handleErrors({ columnCriteria: true })
       }
       return;
     }
@@ -75,19 +74,17 @@ function FireControl({ target, setTarget, handleFire }: IFireControl) {
       if (/^\d+$/.test(newValue) && ROWS_HEADER.includes(parseInt(newValue))) {
         const updated = { ...value, inputRow: newValue };
         setValue(updated);
-        setErrors((prev) => ({
-          ...prev,
-          rowCriteria: false,
-        }));
+        handleErrors({ rowCriteria: false })
         setTarget([
           transformLetterToNumber(updated.inputColumn),
           updated.inputRow ? parseInt(updated.inputRow) : 0,
         ]);
+        
+        if (newValue.length >= 2 || parseInt(newValue) === 10) {
+          buttonRef.current?.focus();
+        }
       } else {
-        setErrors((prev) => ({
-          ...prev,
-          rowCriteria: true,
-        }));
+        handleErrors({ rowCriteria: true })
       }
       return;
     }
@@ -100,20 +97,14 @@ function FireControl({ target, setTarget, handleFire }: IFireControl) {
   function handleClick() {
     if (value.inputColumn.length > 0 && value.inputRow.length > 0) {
       handleFire();
-      setErrors((prev) => ({
-        ...prev,
-        emptyField: false,
-      }));
+      handleErrors({ emptyField: false })
     } else {
-      setErrors((prev) => ({
-        ...prev,
-        emptyField: true,
-      }));
+      handleErrors({ emptyField: true })
     }
   }
 
   return (
-    <div className='flex flex-col gap-10 w-52 h-full'>
+    <>
       <div className='flex gap-2 items-center justify-between'>
         <div className='flex gap-4 h-12'>
           <input
@@ -126,27 +117,17 @@ function FireControl({ target, setTarget, handleFire }: IFireControl) {
           <input
             name='inputRow'
             value={value?.inputRow}
+            ref={rowInputRef}
             placeholder='5'
             className='w-10 h-full border-b-2 text-center placeholder:text-center'
             onChange={(e) => handleChange(e)}
           />
         </div>
-        <button type='button' className='w-24 h-12' onClick={handleClick}>
+        <button type='button' ref={buttonRef} className='w-24 h-12' onClick={handleClick}>
           Fire!
         </button>
       </div>
-      <div className='w-full h-60 grid grid-col-3 justify-between gap-1'>
-        {errors.emptyField && (
-          <ErrorMessage message='You must fill both coordinates!' />
-        )}
-        {errors.columnCriteria && (
-          <ErrorMessage message='The input can only be from A to J!' />
-        )}
-        {errors.rowCriteria && (
-          <ErrorMessage message='The input can only be from 1 to 10!' />
-        )}
-      </div>
-    </div>
+    </>
   );
 }
 

@@ -3,6 +3,12 @@ export type OrientationType = "horizontal" | "vertical";
 export type DirectionType = "up" | "right" | "down" | "left";
 export type ShipSizeType = 4 | 5;
 
+export type ErrorType = {
+  columnCriteria: boolean;
+  rowCriteria: boolean;
+  emptyField: boolean;
+};
+
 export type CellType = {
   cellId: number;
   coordinates: CoordinatesType;
@@ -17,6 +23,7 @@ export type GridType = {
   ships: ShipType[];
   sunkShips: ShipType[];
   endGame: boolean;
+  errors: ErrorType;
 };
 
 export type ShipType = {

@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Grid from "../ui/Grid";
-import FireControl from "../ui/FireControl";
 import type { CoordinatesType, GridType } from "../../types";
-import { generateGrid, getShotResult } from "../../utils/game";
 import { hasCellBeenShot } from "../../utils/cell";
+import { generateGrid, getShotResult } from "../../utils/game";
+import FireControl from "../control/FireControl";
+import Grid from "../ui/Grid";
+import MessageControl from "../control/MessageControl";
 
 /*
 Handling Data accross project:
@@ -23,20 +24,8 @@ So are only need it at one level (or passed once to children).
 */
 
 function Game() {
-  const [target, setTarget] = useState<CoordinatesType>([0,0]);
-  const [grid, setGrid] = useState<GridType>();
-
-  function handleFire(): void {
-    if (target && grid && hasCellBeenShot(target, grid?.layout))
-      console.log("cell has been shot previously!");
-    if (target && grid) setGrid(getShotResult(grid, target));
-  }
-
-  function resetGame() {
-    localStorage.removeItem("battleship-grid");
-    setTarget([0,0]);
-    setGrid(generateGrid());
-  }
+  const [target, setTarget] = useState<CoordinatesType>([0, 0]);
+  const [grid, setGrid] = useState<GridType | null>(null);
 
   useEffect(() => {
     const storedGrid = localStorage.getItem("battleship-grid");
@@ -53,6 +42,21 @@ function Game() {
     }
   }, [grid]);
 
+  function handleFire(): void {
+    if (!grid || !target) return;
+    if (hasCellBeenShot(target, grid.layout)) {
+      console.log("cell has been shot previously!");
+      return;
+    }
+    setGrid(getShotResult(grid, target));
+  }
+
+  function resetGame() {
+    localStorage.removeItem("battleship-grid");
+    setTarget([0, 0]);
+    setGrid(generateGrid());
+  }
+
   return (
     <>
       {grid ? (
@@ -62,11 +66,15 @@ function Game() {
             <button type='button' onClick={resetGame}>
               Reset game
             </button>
-            {grid.endGame ? (
-              <div>END GAME</div>
-            ) : (
-              <FireControl target={target} setTarget={setTarget} handleFire={handleFire} />
-            )}
+            <div className='flex flex-col gap-10 w-52 h-full'>
+              <FireControl
+                target={target}
+                setTarget={setTarget}
+                handleFire={handleFire}
+                setGrid={setGrid}
+              />
+              <MessageControl grid={grid} />
+            </div>
           </div>
         </div>
       ) : (
