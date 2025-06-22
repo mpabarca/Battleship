@@ -26,9 +26,6 @@ const initialValues: InputType = {
   inputRow: "",
 };
 
-// const REGEXP_ONLY_DIGITS = "/^(10|[1-9])$/"
-// const REGEXP_ONLY_ALPHABET = "/^[A-Ja-j]$/"
-
 function FireControl({ target, setTarget, handleFire }: IFireControl) {
   const [value, setValue] = useState<InputType>(initialValues);
   const columnInputRef = useRef<HTMLInputElement>(null);

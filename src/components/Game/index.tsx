@@ -12,7 +12,16 @@ import FireControl from "../control/FireControl";
 import Grid from "../ui/Grid";
 import { Button } from "../ui/Button";
 import { toast } from "sonner";
-import MessageControl from "../control/MessageControl";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/AlertDialog"; // Adjust path as needed
 
 /*
 Handling Data accross project:
@@ -32,6 +41,7 @@ So are only need it at one level (or passed once to children).
 function Game() {
   const [target, setTarget] = useState<CoordinatesType>([0, 0]);
   const [grid, setGrid] = useState<GridType | null>(null);
+  const [showEndGameDialog, setShowEndGameDialog] = useState(false);
 
   useEffect(() => {
     const storedGrid = localStorage.getItem("battleship-grid");
@@ -47,6 +57,12 @@ function Game() {
       localStorage.setItem("battleship-grid", JSON.stringify(grid));
     }
   }, [grid]);
+
+  useEffect(() => {
+    if (grid?.endGame) {
+      setShowEndGameDialog(true);
+    }
+  }, [grid?.endGame]);
 
   function handleFire(): void {
     if (!grid || !target) return;
@@ -95,9 +111,34 @@ function Game() {
                 setTarget={setTarget}
                 handleFire={handleFire}
               />
-              <MessageControl endGame={grid.endGame} />
             </div>
           </div>
+          <AlertDialog
+            open={showEndGameDialog}
+            onOpenChange={setShowEndGameDialog}
+          >
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Game Over</AlertDialogTitle>
+                <AlertDialogDescription>
+                  All ships have been sunk. Would you like to play again?
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel onClick={() => setShowEndGameDialog(false)}>
+                  Cancel
+                </AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={() => {
+                    setShowEndGameDialog(false);
+                    resetGame();
+                  }}
+                >
+                  Restart
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       ) : (
         <div className='flex flex-row items-center gap-20'>
