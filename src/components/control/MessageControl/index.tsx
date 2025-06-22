@@ -12,11 +12,12 @@ function MessageControl({ grid, target }: IMessageControl) {
   return (
     <>
       {endGame ? (
-        <Message color='green' message='END GAME!' />
+        <Message id="message-end-game" color='green' message='You have won! END GAME!' />
       ) : (
         <div className='w-full grid grid-col-3 justify-start gap-1'>
-          {errors?.hasCellBeenShot && (
+          {errors?.hasCellBeenShot && target[0] !== 0 && target[1] !== 0 && (
             <Message
+              id="message-hasCellBeenShot"
               color='yellow'
               message={`Cell [${transformNumberToLetter(target[0])},${
                 target[1]
@@ -24,13 +25,14 @@ function MessageControl({ grid, target }: IMessageControl) {
             />
           )}
           {errors?.emptyField && (
-            <Message color='red' message='You must fill both coordinates!' />
+            <Message id="message-emptyField" color='red' message='You must fill both coordinates!' />
           )}
           {errors?.columnCriteria && (
-            <Message color='red' message='The input can only be from A to J!' />
+            <Message id="message-columnCriteria" color='red' message='The input can only be from A to J!' />
           )}
           {errors?.rowCriteria && (
             <Message
+              id="message-rowCriteria"
               color='red'
               message='The input can only be from 1 to 10!'
             />

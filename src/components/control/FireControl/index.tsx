@@ -37,6 +37,7 @@ function FireControl({ target, setTarget, handleFire, handleErrors }: IFireContr
         transformLetterToNumber(updated.inputColumn),
         updated.inputRow ? parseInt(updated.inputRow) : 0,
       ]);
+      handleErrors({ hasCellBeenShot: false })
       return;
     }
     if (name === "inputColumn") {
