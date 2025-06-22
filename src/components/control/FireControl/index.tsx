@@ -96,14 +96,14 @@ function FireControl({ target, setTarget, handleFire }: IFireControl) {
     <>
       <div className='flex gap-2 items-center justify-between'>
         <div className='flex gap-4 h-12'>
-          <input
+          <Input
             name='inputColumn'
             value={value?.inputColumn}
             placeholder='A'
             className='w-10 h-full border-b-2 text-center placeholder:text-center'
             onChange={(e) => handleChange(e)}
           />
-          <input
+          <Input
             name='inputRow'
             value={value?.inputRow}
             ref={rowInputRef}
