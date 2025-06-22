@@ -1,13 +1,18 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import type { CoordinatesType, ErrorType, GridType } from "../../types";
+import { useEffect, useState } from "react";
+import type { CoordinatesType, GridType } from "../../types";
 import { hasCellBeenShot } from "../../utils/cell";
-import { generateGrid, getShotResult } from "../../utils/game";
+import {
+  generateGrid,
+  getShotResult,
+  transformNumberToLetter,
+} from "../../utils/game";
 import FireControl from "../control/FireControl";
-import MessageControl from "../control/MessageControl";
 import Grid from "../ui/Grid";
 import { Button } from "../ui/Button";
+import { toast } from "sonner";
+import MessageControl from "../control/MessageControl";
 
 /*
 Handling Data accross project:
@@ -46,11 +51,14 @@ function Game() {
   function handleFire(): void {
     if (!grid || !target) return;
     if (hasCellBeenShot(target, grid.layout)) {
-      handleErrors({ hasCellBeenShot: true });
+      toast.error(
+        `Cell [${transformNumberToLetter(target[0])},${
+          target[1]
+        }] has been shot previously! Try a new one`
+      );
       return;
     }
     setGrid(getShotResult(grid, target));
-    handleErrors({ hasCellBeenShot: false });
   }
 
   function resetGame() {
@@ -58,23 +66,6 @@ function Game() {
     setTarget([0, 0]);
     setGrid(generateGrid());
   }
-
-  // memoize handleErrors to only update single error type on grid
-  const handleErrors = useCallback(
-    (updates: Partial<ErrorType>) => {
-      setGrid((prev) => {
-        if (!prev) return prev;
-        return {
-          ...prev,
-          errors: {
-            ...prev.errors,
-            ...updates,
-          },
-        };
-      });
-    },
-    [setGrid]
-  );
 
   return (
     <>
@@ -103,9 +94,8 @@ function Game() {
                 target={target}
                 setTarget={setTarget}
                 handleFire={handleFire}
-                handleErrors={handleErrors}
               />
-              <MessageControl grid={grid} target={target} />
+              <MessageControl endGame={grid.endGame} />
             </div>
           </div>
         </div>

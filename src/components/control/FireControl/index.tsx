@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import type { CoordinatesType, ErrorType } from "../../../types";
+import type { CoordinatesType } from "../../../types";
 import {
   COLUMNS_HEADER,
   ROWS_HEADER,
@@ -7,6 +7,7 @@ import {
 } from "../../../utils/game";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
+import { toast } from "sonner";
 
 type InputType = {
   inputColumn: string;
@@ -17,7 +18,6 @@ interface IFireControl {
   target: CoordinatesType | [0, 0];
   setTarget: React.Dispatch<React.SetStateAction<CoordinatesType>>;
   handleFire: () => void;
-  handleErrors: (updates: Partial<ErrorType>) => void;
 }
 
 const initialValues: InputType = {
@@ -25,7 +25,10 @@ const initialValues: InputType = {
   inputRow: "",
 }
 
-function FireControl({ target, setTarget, handleFire, handleErrors }: IFireControl) {
+// const REGEXP_ONLY_DIGITS = "/^(10|[1-9])$/"
+// const REGEXP_ONLY_ALPHABET = "/^[A-Ja-j]$/"
+
+function FireControl({ target, setTarget, handleFire }: IFireControl) {
   const [value, setValue] = useState<InputType>(initialValues);
   const rowInputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null)
@@ -39,7 +42,6 @@ function FireControl({ target, setTarget, handleFire, handleErrors }: IFireContr
         transformLetterToNumber(updated.inputColumn),
         updated.inputRow ? parseInt(updated.inputRow) : 0,
       ]);
-      handleErrors({ hasCellBeenShot: false })
       return;
     }
     if (name === "inputColumn") {
@@ -47,14 +49,13 @@ function FireControl({ target, setTarget, handleFire, handleErrors }: IFireContr
       if (COLUMNS_HEADER.includes(upperValue)) {
         const updated = { ...value, inputColumn: upperValue };
         setValue(updated);
-        handleErrors({ columnCriteria: false })
         setTarget([
           transformLetterToNumber(updated.inputColumn),
           updated.inputRow ? parseInt(updated.inputRow) : 0,
         ]);
         rowInputRef.current?.focus();
       } else {
-        handleErrors({ columnCriteria: true })
+        toast.error('The input can only be from A to J!')
       }
       return;
     }
@@ -64,7 +65,6 @@ function FireControl({ target, setTarget, handleFire, handleErrors }: IFireContr
       if (/^\d+$/.test(newValue) && ROWS_HEADER.includes(parseInt(newValue))) {
         const updated = { ...value, inputRow: newValue };
         setValue(updated);
-        handleErrors({ rowCriteria: false })
         setTarget([
           transformLetterToNumber(updated.inputColumn),
           updated.inputRow ? parseInt(updated.inputRow) : 0,
@@ -74,7 +74,7 @@ function FireControl({ target, setTarget, handleFire, handleErrors }: IFireContr
           buttonRef.current?.focus();
         }
       } else {
-        handleErrors({ rowCriteria: true })
+        toast.error('The input can only be from 1 to 10!')
       }
       return;
     }
@@ -87,9 +87,8 @@ function FireControl({ target, setTarget, handleFire, handleErrors }: IFireContr
   function handleClick() {
     if (value.inputColumn.length > 0 && value.inputRow.length > 0) {
       handleFire();
-      handleErrors({ emptyField: false })
     } else {
-      handleErrors({ emptyField: true })
+      toast.error('You must fill both coordinates!')
     }
   }
 
@@ -113,7 +112,7 @@ function FireControl({ target, setTarget, handleFire, handleErrors }: IFireContr
             onChange={(e) => handleChange(e)}
           />
         </div>
-        <Button type='button' ref={buttonRef} className='w-24 h-12' onClick={handleClick}>
+        <Button type='button' ref={buttonRef} className='w-32 h-12' onClick={handleClick}>
           Fire!
         </Button>
       </div>
