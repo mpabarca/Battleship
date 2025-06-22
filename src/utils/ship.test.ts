@@ -10,10 +10,10 @@ describe('existShipCellOverlap', () => {
       shotCounter: 0,
       direction: 'right',
       cells: [
-        { cellId: 11, shipId: 1, shot: false, coordinates: [1, 1] },
-        { cellId: 12,shipId: 1, shot: false, coordinates: [1, 2] },
-        { cellId: 13,shipId: 1, shot: false, coordinates: [1, 3] },
-        { cellId: 14,shipId: 1, shot: false, coordinates: [1, 4] },
+        { cellId: 11,shipId: 1, shot: false, coordinates: [1, 1], shipSunk: false },
+        { cellId: 12,shipId: 1, shot: false, coordinates: [1, 2], shipSunk: false },
+        { cellId: 13,shipId: 1, shot: false, coordinates: [1, 3], shipSunk: false },
+        { cellId: 14,shipId: 1, shot: false, coordinates: [1, 4], shipSunk: false },
       ]
     },
     {
@@ -23,10 +23,10 @@ describe('existShipCellOverlap', () => {
       shotCounter: 0,
       direction: 'down',
       cells: [
-        { cellId: 33,shipId: 2, shot: false, coordinates: [3, 3] },
-        { cellId: 43,shipId: 2, shot: false, coordinates: [4, 3] },
-        { cellId: 53,shipId: 2, shot: false, coordinates: [5, 3] },
-        { cellId: 63,shipId: 2, shot: false, coordinates: [6, 3] },
+        { cellId: 33,shipId: 2, shot: false, coordinates: [3, 3], shipSunk: false },
+        { cellId: 43,shipId: 2, shot: false, coordinates: [4, 3], shipSunk: false },
+        { cellId: 53,shipId: 2, shot: false, coordinates: [5, 3], shipSunk: false },
+        { cellId: 63,shipId: 2, shot: false, coordinates: [6, 3], shipSunk: false },
       ]
     }
   ];
