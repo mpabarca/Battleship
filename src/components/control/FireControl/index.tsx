@@ -9,16 +9,16 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { toast } from "sonner";
 
-type InputType = {
-  inputColumn: string;
-  inputRow: string;
-};
-
 interface IFireControl {
   target: CoordinatesType | [0, 0];
   setTarget: React.Dispatch<React.SetStateAction<CoordinatesType>>;
   handleFire: () => void;
 }
+
+type InputType = {
+  inputColumn: string;
+  inputRow: string;
+};
 
 const initialValues: InputType = {
   inputColumn: "",
@@ -27,9 +27,22 @@ const initialValues: InputType = {
 
 function FireControl({ target, setTarget, handleFire }: IFireControl) {
   const [value, setValue] = useState<InputType>(initialValues);
+
   const columnInputRef = useRef<HTMLInputElement>(null);
   const rowInputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+
+    useEffect(() => {
+    if (target[0] === 0 && target[1] === 0) setValue(initialValues);
+  }, [target]);
+
+  function handleClick() {
+    if (value.inputColumn.length > 0 && value.inputRow.length > 0) {
+      handleFire();
+    } else {
+      toast.error("You must fill both coordinates!");
+    }
+  }
 
   function handleChange(e: React.FormEvent<HTMLInputElement>): void {
     const { name, value: newValue } = e.currentTarget;
@@ -60,18 +73,6 @@ function FireControl({ target, setTarget, handleFire }: IFireControl) {
         toast.error("The input can only be from 1 to 10!");
       }
       return;
-    }
-  }
-
-  useEffect(() => {
-    if (target[0] === 0 && target[1] === 0) setValue(initialValues);
-  }, [target]);
-
-  function handleClick() {
-    if (value.inputColumn.length > 0 && value.inputRow.length > 0) {
-      handleFire();
-    } else {
-      toast.error("You must fill both coordinates!");
     }
   }
 
@@ -127,7 +128,7 @@ function FireControl({ target, setTarget, handleFire }: IFireControl) {
   return (
     <>
       <div className='flex gap-2 items-center justify-between'>
-        <div className='flex gap-4 h-12'>
+        <div className='flex gap-2 h-12'>
           <Input
             name='inputColumn'
             value={value?.inputColumn}
@@ -153,7 +154,7 @@ function FireControl({ target, setTarget, handleFire }: IFireControl) {
         <Button
           type='button'
           ref={buttonRef}
-          className='w-32 h-12'
+          className={'w-34 h-12'}
           onClick={handleClick}
           onKeyDown={(e) => handleKeyNavigation(e)}
         >
