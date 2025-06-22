@@ -76,6 +76,7 @@ export function generateGrid(): GridType {
     ships,
     sunkShips: [],
     endGame: false,
+    showShips: false,
     errors: {
       columnCriteria: false,
       rowCriteria: false,

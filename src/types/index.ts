@@ -25,6 +25,7 @@ export type GridType = {
   sunkShips: ShipType[];
   endGame: boolean;
   errors: ErrorType;
+  showShips: boolean;
 };
 
 export type ShipType = {

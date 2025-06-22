@@ -45,11 +45,11 @@ function Game() {
   function handleFire(): void {
     if (!grid || !target) return;
     if (hasCellBeenShot(target, grid.layout)) {
-      handleErrors({ hasCellBeenShot: true })
+      handleErrors({ hasCellBeenShot: true });
       return;
     }
     setGrid(getShotResult(grid, target));
-    handleErrors({ hasCellBeenShot: false })
+    handleErrors({ hasCellBeenShot: false });
   }
 
   function resetGame() {
@@ -58,28 +58,44 @@ function Game() {
     setGrid(generateGrid());
   }
 
-    // memoize handleErrors to only update single error type on grid
-    const handleErrors = useCallback((updates: Partial<ErrorType>) => {
+  // memoize handleErrors to only update single error type on grid
+  const handleErrors = useCallback(
+    (updates: Partial<ErrorType>) => {
       setGrid((prev) => {
-        if(!prev) return prev;
+        if (!prev) return prev;
         return {
-        ...prev,
-        errors: {
-          ...prev.errors,
-          ...updates
-        }
-      }})
-    }, [setGrid])
+          ...prev,
+          errors: {
+            ...prev.errors,
+            ...updates,
+          },
+        };
+      });
+    },
+    [setGrid]
+  );
 
   return (
     <>
       {grid ? (
         <div className='flex flex-row h-full gap-20'>
-          <Grid grid={grid} />
+          <Grid grid={grid} showShips={grid.showShips} />
           <div className='flex flex-col h-full gap-20 justify-between'>
-            <button type='button' onClick={resetGame}>
-              Reset game
-            </button>
+            <div className='flex flex-col gap-6'>
+              <button type='button' onClick={resetGame}>
+                Reset game
+              </button>
+              <button
+                type='button'
+                onClick={() =>
+                  setGrid((prev) =>
+                    prev ? { ...prev, showShips: !prev.showShips } : prev
+                  )
+                }
+              >
+                {`${grid.showShips ? "Hide" : "Show"} ships`}
+              </button>
+            </div>
             <div className='flex flex-col gap-10 w-52 h-full'>
               <FireControl
                 target={target}

@@ -4,9 +4,10 @@ import Cell from "../Cell";
 
 interface IGrid {
   grid: GridType;
+  showShips: boolean;
 }
 
-function Grid ({ grid }: IGrid) {
+function Grid ({ grid, showShips }: IGrid) {
   // grid-cols-10 => GRID_SIZE[0]
   // grid-rows-10 => GRID_SIZE[1]
 
@@ -33,7 +34,7 @@ function Grid ({ grid }: IGrid) {
         <div className="grid grid-rows-10 border border-zinc-600">
           {grid.layout.map((row, rowIndex) => (
             <div key={rowIndex} className={`grid gap-0 grid-cols-10`}>
-              {row.map((cell, columnIndex) => (<Cell key={columnIndex} cell={cell} />))}
+              {row.map((cell, columnIndex) => (<Cell key={columnIndex} cell={cell} showShips={showShips} />))}
             </div>
             ))
           }
