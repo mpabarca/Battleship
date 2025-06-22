@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import type { CoordinatesType, GridType } from "../../types";
+import { useCallback, useEffect, useState } from "react";
+import type { CoordinatesType, ErrorType, GridType } from "../../types";
 import { hasCellBeenShot } from "../../utils/cell";
 import { generateGrid, getShotResult } from "../../utils/game";
 import FireControl from "../control/FireControl";
@@ -45,10 +45,11 @@ function Game() {
   function handleFire(): void {
     if (!grid || !target) return;
     if (hasCellBeenShot(target, grid.layout)) {
-      console.log("cell has been shot previously!");
+      handleErrors({ hasCellBeenShot: true })
       return;
     }
     setGrid(getShotResult(grid, target));
+    handleErrors({ hasCellBeenShot: false })
   }
 
   function resetGame() {
@@ -56,6 +57,19 @@ function Game() {
     setTarget([0, 0]);
     setGrid(generateGrid());
   }
+
+    // memoize handleErrors to only update single error type on grid
+    const handleErrors = useCallback((updates: Partial<ErrorType>) => {
+      setGrid((prev) => {
+        if(!prev) return prev;
+        return {
+        ...prev,
+        errors: {
+          ...prev.errors,
+          ...updates
+        }
+      }})
+    }, [setGrid])
 
   return (
     <>
@@ -71,9 +85,9 @@ function Game() {
                 target={target}
                 setTarget={setTarget}
                 handleFire={handleFire}
-                setGrid={setGrid}
+                handleErrors={handleErrors}
               />
-              <MessageControl grid={grid} />
+              <MessageControl grid={grid} target={target} />
             </div>
           </div>
         </div>

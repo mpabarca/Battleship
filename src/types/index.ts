@@ -7,6 +7,7 @@ export type ErrorType = {
   columnCriteria: boolean;
   rowCriteria: boolean;
   emptyField: boolean;
+  hasCellBeenShot: boolean;
 };
 
 export type CellType = {

@@ -12,7 +12,7 @@ type ColorThemeType = {
 function Message({ message, color }: IMessage) {
   const theme: ColorThemeType = {
     red: 'bg-red-200/80 text-red-950 border-red-950',
-    yellow: '',
+    yellow: 'bg-yellow-100 text-yellow-950 border-yellow-950',
     green: '',
   }
  

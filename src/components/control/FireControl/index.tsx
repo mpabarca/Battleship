@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import type { CoordinatesType, ErrorType, GridType } from "../../../types";
+import { useEffect, useRef, useState } from "react";
+import type { CoordinatesType, ErrorType } from "../../../types";
 import {
   COLUMNS_HEADER,
   ROWS_HEADER,
@@ -15,7 +15,7 @@ interface IFireControl {
   target: CoordinatesType | [0, 0];
   setTarget: React.Dispatch<React.SetStateAction<CoordinatesType>>;
   handleFire: () => void;
-  setGrid: React.Dispatch<React.SetStateAction<GridType | null>>;
+  handleErrors: (updates: Partial<ErrorType>) => void;
 }
 
 const initialValues: InputType = {
@@ -23,23 +23,10 @@ const initialValues: InputType = {
     inputRow: "",
   }
 
-function FireControl({ target, setTarget, handleFire, setGrid }: IFireControl) {
+function FireControl({ target, setTarget, handleFire, handleErrors }: IFireControl) {
   const [value, setValue] = useState<InputType>(initialValues);
   const rowInputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null)
-
-  // memoize handleErrors to only update single error type on grid
-  const handleErrors = useCallback((updates: Partial<ErrorType>) => {
-    setGrid((prev) => {
-      if(!prev) return prev;
-      return {
-      ...prev,
-      errors: {
-        ...prev.errors,
-        ...updates
-      }
-    }})
-  }, [setGrid])
 
   function handleChange(e: React.FormEvent<HTMLInputElement>): void {
     const { name, value: newValue } = e.currentTarget;
