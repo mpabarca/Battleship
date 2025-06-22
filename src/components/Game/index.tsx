@@ -5,8 +5,8 @@ import type { CoordinatesType, ErrorType, GridType } from "../../types";
 import { hasCellBeenShot } from "../../utils/cell";
 import { generateGrid, getShotResult } from "../../utils/game";
 import FireControl from "../control/FireControl";
-import Grid from "../ui/Grid";
 import MessageControl from "../control/MessageControl";
+import Grid from "../ui/Grid";
 
 /*
 Handling Data accross project:
