@@ -11,11 +11,13 @@ export function sameCells(cell1: CoordinatesType, cell2: CoordinatesType) {
 }
 
 export function generateCellBasedOnGrid( cellCoordinates: CoordinatesType, ships: ShipType[]): CellType {
+  const shipId = getCellShipId(ships, cellCoordinates)
   return {
     cellId: parseInt(`${cellCoordinates[0]}${cellCoordinates[1]}`),
     coordinates: cellCoordinates,
     shot: false,
-    shipId: getCellShipId(ships, cellCoordinates),
+    shipId,
+    shipSunk: shipId ? false : null,
   }
 }
 

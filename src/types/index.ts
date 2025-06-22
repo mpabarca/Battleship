@@ -15,6 +15,7 @@ export type CellType = {
   coordinates: CoordinatesType;
   shot: boolean;
   shipId: number | null;
+  shipSunk: boolean | null;
 };
 
 export type GridLayoutType = CellType[][];
