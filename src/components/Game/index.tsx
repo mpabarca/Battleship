@@ -90,12 +90,18 @@ function Game() {
           <Grid grid={grid} showShips={grid.showShips} />
           <div className='flex flex-col h-full gap-20 justify-between'>
             <div className='flex flex-col gap-6'>
-              <Button type='button' variant={"secondary"} onClick={resetGame}>
+              <Button
+                type='button'
+                variant={"secondary"}
+                onClick={resetGame}
+                className='h-12'
+              >
                 Reset game
               </Button>
               <Button
                 type='button'
                 variant={"secondary"}
+                className='h-12'
                 onClick={() =>
                   setGrid((prev) =>
                     prev ? { ...prev, showShips: !prev.showShips } : prev
