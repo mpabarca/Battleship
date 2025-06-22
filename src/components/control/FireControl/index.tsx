@@ -5,6 +5,8 @@ import {
   ROWS_HEADER,
   transformLetterToNumber,
 } from "../../../utils/game";
+import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
 
 type InputType = {
   inputColumn: string;
@@ -19,9 +21,9 @@ interface IFireControl {
 }
 
 const initialValues: InputType = {
-    inputColumn: "",
-    inputRow: "",
-  }
+  inputColumn: "",
+  inputRow: "",
+}
 
 function FireControl({ target, setTarget, handleFire, handleErrors }: IFireControl) {
   const [value, setValue] = useState<InputType>(initialValues);
@@ -111,9 +113,9 @@ function FireControl({ target, setTarget, handleFire, handleErrors }: IFireContr
             onChange={(e) => handleChange(e)}
           />
         </div>
-        <button type='button' ref={buttonRef} className='w-24 h-12' onClick={handleClick}>
+        <Button type='button' ref={buttonRef} className='w-24 h-12' onClick={handleClick}>
           Fire!
-        </button>
+        </Button>
       </div>
     </>
   );

@@ -7,6 +7,7 @@ import { generateGrid, getShotResult } from "../../utils/game";
 import FireControl from "../control/FireControl";
 import MessageControl from "../control/MessageControl";
 import Grid from "../ui/Grid";
+import { Button } from "../ui/Button";
 
 /*
 Handling Data accross project:
@@ -82,11 +83,12 @@ function Game() {
           <Grid grid={grid} showShips={grid.showShips} />
           <div className='flex flex-col h-full gap-20 justify-between'>
             <div className='flex flex-col gap-6'>
-              <button type='button' onClick={resetGame}>
+              <Button type='button' variant={"secondary"} onClick={resetGame}>
                 Reset game
-              </button>
-              <button
+              </Button>
+              <Button
                 type='button'
+                variant={"secondary"}
                 onClick={() =>
                   setGrid((prev) =>
                     prev ? { ...prev, showShips: !prev.showShips } : prev
@@ -94,9 +96,9 @@ function Game() {
                 }
               >
                 {`${grid.showShips ? "Hide" : "Show"} ships`}
-              </button>
+              </Button>
             </div>
-            <div className='flex flex-col gap-10 w-52 h-full'>
+            <div className='flex flex-col gap-10 w-60 h-full'>
               <FireControl
                 target={target}
                 setTarget={setTarget}
