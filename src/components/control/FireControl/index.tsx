@@ -8,7 +8,6 @@ import {
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { toast } from "sonner";
-import { isAlphabetKey } from "@/utils/general";
 
 type InputType = {
   inputColumn: string;
@@ -79,7 +78,7 @@ function FireControl({ target, setTarget, handleFire }: IFireControl) {
   function handleChangeKeyColumn(e: React.KeyboardEvent<HTMLInputElement>) {
     const upperValue = e.key.toUpperCase();
 
-    if (COLUMNS_HEADER.includes(upperValue)) {
+    if (COLUMNS_HEADER.includes(upperValue) || e.key === "Backspace") {
       e.preventDefault();
       const updated = { ...value, inputColumn: upperValue };
       setValue(updated);
@@ -87,8 +86,8 @@ function FireControl({ target, setTarget, handleFire }: IFireControl) {
         transformLetterToNumber(updated.inputColumn),
         updated.inputRow ? parseInt(updated.inputRow) : 0,
       ]);
-      rowInputRef.current?.focus();
-    } else if (isAlphabetKey(e.key)) {
+      if(COLUMNS_HEADER.includes(upperValue)) rowInputRef.current?.focus();
+    } else  {
       e.preventDefault();
       toast.error("The input can only be from A to J!");
     }
