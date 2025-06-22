@@ -58,3 +58,7 @@ export function getConsecutivesIntArrayBySize(size: number): number[] {
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export function isAlphabetKey(key: string): boolean {
+  return /^[a-zA-Z]$/.test(key);
+}
