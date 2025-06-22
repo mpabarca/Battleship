@@ -86,7 +86,7 @@ function Game() {
   return (
     <>
       {grid ? (
-        <div className='flex flex-row h-full gap-30'>
+        <div className='flex flex-row h-full gap-24'>
           <Grid grid={grid} showShips={grid.showShips} />
           <div className='flex flex-col h-full gap-20 justify-between'>
             <div className='flex flex-col gap-6'>
