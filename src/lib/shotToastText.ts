@@ -9,8 +9,8 @@ export function getShotMessage(type: ShootType): string {
 }
 
 export function getShotTitle(type: ShootType): string {
-  if (type === "sink") return "Sink a Ship!";
-  if (type === "hit") return "Hit a Ship!";
+  if (type === "sink") return "Ship Sank!";
+  if (type === "hit") return "Ship Hit!";
   return "You didn't hit a thing";
 }
 
