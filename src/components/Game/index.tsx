@@ -30,7 +30,7 @@ Handling Data accross project:
             ✔ |-> only changes when button  inside <FireControl /> is click
 - GLOBAL => [x,y] input <- from <FireControl />
             ✔ |-> stored as state on <Game /> parent component
-              |-> <Grid /> reactively uses to show selected coordinates (constant visual feedback to user)
+            ✔ |-> <Grid /> reactively uses to show selected coordinates (constant visual feedback to user)
             ✔ |-> when click button inside <FireControl /> is use to handle <grid> 
 
 Why use useState as state managment instead of react context or others?
@@ -38,10 +38,17 @@ Based on scope, we have minimal global state: just grid and target. Which are fu
 So are only need it at one level (or passed once to children).
 */
 
+export type SelectColumnType = { selecting: boolean; column: number };
+export type SelectRowType = { selecting: boolean; row: number };
+
 function Game() {
   const [target, setTarget] = useState<CoordinatesType>([0, 0]);
   const [grid, setGrid] = useState<GridType | null>(null);
-  const [showEndGameDialog, setShowEndGameDialog] = useState(false);
+  const [showEndGameDialog, setShowEndGameDialog] = useState<boolean>(false);
+  const [selectingColumn, setSelectingColumn] =
+    useState<SelectColumnType>({ selecting: false, column: 0 });
+  const [selectingRow, setSelectingRow] =
+    useState<SelectRowType>({ selecting: false, row: 0 });
 
   useEffect(() => {
     const storedGrid = localStorage.getItem("battleship-grid");
@@ -75,6 +82,8 @@ function Game() {
       return;
     }
     setGrid(getShotResult(grid, target));
+    setSelectingColumn((prev) => ({...prev, selecting: false}));
+    setSelectingRow((prev) => ({...prev, selecting: false}));
   }
 
   function resetGame() {
@@ -86,8 +95,13 @@ function Game() {
   return (
     <>
       {grid ? (
-        <div className='flex flex-row h-full gap-20'>
-          <Grid grid={grid} showShips={grid.showShips} />
+        <div className='flex flex-row h-full gap-24'>
+          <Grid
+            grid={grid}
+            showShips={grid.showShips}
+            selectingColumn={selectingColumn}
+            selectingRow={selectingRow}
+          />
           <div className='flex flex-col h-full gap-20 justify-between'>
             <div className='flex flex-col gap-6'>
               <Button
@@ -116,6 +130,8 @@ function Game() {
                 target={target}
                 setTarget={setTarget}
                 handleFire={handleFire}
+                setSelectingColumn={setSelectingColumn}
+                setSelectingRow={setSelectingRow}
               />
             </div>
           </div>

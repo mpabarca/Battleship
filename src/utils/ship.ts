@@ -70,6 +70,7 @@ export function generateShipCells(shipId: number, firstCell: CoordinatesType, si
     shipId: shipId,
     shot: false,
     coordinates: firstCell,
+    shipSunk: false,
   }]
 
   for (let i = 1; i < size; i++) {
@@ -78,7 +79,8 @@ export function generateShipCells(shipId: number, firstCell: CoordinatesType, si
       cellId: parseInt(`${nextCell[0]}${nextCell[1]}`),
       shipId: shipId,
       shot: false,
-      coordinates: nextCell
+      coordinates: nextCell,
+      shipSunk: false
     })
     else {
       return null

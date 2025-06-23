@@ -1,4 +1,11 @@
-import type { CellType, CoordinatesType, GridLayoutType, GridType, ShipSizeType, ShipType } from "../types";
+import type {
+  CellType,
+  CoordinatesType,
+  GridLayoutType,
+  GridType,
+  ShipSizeType,
+  ShipType,
+} from "../types";
 import { generateCellBasedOnGrid, sameCells } from "./cell";
 import { ALPHABET, getConsecutivesIntArrayBySize } from "./general";
 import { generateShip } from "./ship";
@@ -6,8 +13,10 @@ import { generateShip } from "./ship";
 export const SHIPS_SIZES: ShipSizeType[] = [5, 4, 4];
 export const GRID_SIZE: [number, number] = [10, 10]; // [column X, row Y]
 
-export const ROWS_HEADER: number[] = getConsecutivesIntArrayBySize(GRID_SIZE[0])
-export const COLUMNS_HEADER: string[] = ALPHABET.slice(0, GRID_SIZE[0])
+export const ROWS_HEADER: number[] = getConsecutivesIntArrayBySize(
+  GRID_SIZE[0]
+);
+export const COLUMNS_HEADER: string[] = ALPHABET.slice(0, GRID_SIZE[0]);
 
 /*
 RULES:
@@ -44,31 +53,34 @@ RULES:
   - sunkShips.length < ships.length => repeat step 3
 */
 
-export function transformLetterToNumber(letter: string): number{
-  return ALPHABET.indexOf(letter.toUpperCase()) + 1
+export function transformLetterToNumber(letter: string): number {
+  return ALPHABET.indexOf(letter.toUpperCase()) + 1;
 }
-export function transformNumberToLetter(number: number): string{
-  return ALPHABET[number - 1]
+export function transformNumberToLetter(number: number): string {
+  return ALPHABET[number - 1];
 }
 
 export function generateGrid(): GridType {
-  const ships: ShipType[] = []
-  const grid: GridLayoutType = []
+  const ships: ShipType[] = [];
+  const grid: GridLayoutType = [];
 
   // 1. Program creates a fix number of ships
   SHIPS_SIZES.forEach((shipLength, index) => {
     const ship: ShipType = generateShip(index + 1, shipLength, ships);
-    ships.push(ship)
-  })
+    ships.push(ship);
+  });
 
   // 2. Program creates 10 x 10 grid
-  for(let rowIndex = 1; rowIndex <= GRID_SIZE[1]; rowIndex++){
+  for (let rowIndex = 1; rowIndex <= GRID_SIZE[1]; rowIndex++) {
     const row: CellType[] = [];
-    for(let columnIndex = 1; columnIndex <= GRID_SIZE[0]; columnIndex++){
-      const cell: CellType = generateCellBasedOnGrid([rowIndex,columnIndex], ships);
-      row.push(cell)
+    for (let columnIndex = 1; columnIndex <= GRID_SIZE[0]; columnIndex++) {
+      const cell: CellType = generateCellBasedOnGrid(
+        [columnIndex, rowIndex],
+        ships
+      );
+      row.push(cell);
     }
-    grid.push(row)
+    grid.push(row);
   }
 
   return {
@@ -82,28 +94,62 @@ export function generateGrid(): GridType {
       rowCriteria: false,
       emptyField: false,
       hasCellBeenShot: false,
-    }
+    },
   };
 }
 
-export function getShotResult(grid: GridType, shotCoordinates: CoordinatesType): GridType {
+export function getShotResult(
+  grid: GridType,
+  shotCoordinates: CoordinatesType
+): GridType {
+  const [x, y] = shotCoordinates;
+  // Deep clone but detached from original
   const gridAfterImpact: GridType = structuredClone(grid);
-  const cellAfterImpact :CellType = gridAfterImpact.layout[shotCoordinates[1] - 1][shotCoordinates[0] - 1]
-  cellAfterImpact.shot = true;
-  
-  if(cellAfterImpact.shipId) {
-    console.log("shoot on a ship!!")
-    const shipAfterImpact: ShipType = gridAfterImpact.ships[cellAfterImpact.shipId - 1]
-    for(let i = 0; i < shipAfterImpact.cells.length; i++) {
-      if(sameCells(shotCoordinates, shipAfterImpact.cells[i].coordinates)) shipAfterImpact.cells[i].shot = true;
-    }
+  const cellAfterImpact: CellType = gridAfterImpact.layout[y - 1][x - 1];
+  // Mark the impacted cell as shot
+  gridAfterImpact.layout[y - 1][x - 1] = {
+    ...cellAfterImpact,
+    shot: true,
+  };
+  // Check if a ship was hit
+  if (cellAfterImpact.shipId) {
+    const shipAfterImpact: ShipType =
+      gridAfterImpact.ships[cellAfterImpact.shipId - 1];
     shipAfterImpact.shotCounter++;
 
-    if(shipAfterImpact.shotCounter === shipAfterImpact.length) {
-      shipAfterImpact.sunk = true
-      gridAfterImpact.sunkShips.push(shipAfterImpact)
-      if(gridAfterImpact.sunkShips.length === gridAfterImpact.ships.length) gridAfterImpact.endGame = true;
+    // Update the shot cell inside the ship's cells
+    for (let i = 0; i < shipAfterImpact.cells.length; i++) {
+      const cell = shipAfterImpact.cells[i];
+      if (sameCells(shotCoordinates, cell.coordinates)) {
+        shipAfterImpact.cells[i] = {
+          ...cell,
+          shot: true,
+        };
+        break;
+      }
     }
+
+    // Check if the ship is sunk
+    if (shipAfterImpact.shotCounter === shipAfterImpact.length) {
+      shipAfterImpact.sunk = true;
+      gridAfterImpact.sunkShips.push(shipAfterImpact);
+
+      // Mark each cell in the layout as shipSunk (with updated object)
+      for (let i = 0; i < shipAfterImpact.cells.length; i++) {
+        const [x, y] = shipAfterImpact.cells[i].coordinates;
+        gridAfterImpact.layout[y - 1][x - 1] = {
+          ...gridAfterImpact.layout[y - 1][x - 1],
+          shipSunk: true,
+        };
+      }
+    }   
+
+    // Check if game ends
+    if (
+      shipAfterImpact.shotCounter === shipAfterImpact.length &&
+      gridAfterImpact.sunkShips.length === gridAfterImpact.ships.length
+    )
+      gridAfterImpact.endGame = true;
   }
 
   return gridAfterImpact;
