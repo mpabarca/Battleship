@@ -5,6 +5,7 @@ import type {
   GridType,
   ShipSizeType,
   ShipType,
+  ShootType,
 } from "../types";
 import { generateCellBasedOnGrid, sameCells } from "./cell";
 import { ALPHABET, getConsecutivesIntArrayBySize } from "./general";
@@ -101,8 +102,9 @@ export function generateGrid(): GridType {
 export function getShotResult(
   grid: GridType,
   shotCoordinates: CoordinatesType
-): GridType {
+): {grid: GridType, shootType: ShootType} {
   const [x, y] = shotCoordinates;
+  let shootType: ShootType = "miss"; //by default
   // Deep clone but detached from original
   const gridAfterImpact: GridType = structuredClone(grid);
   const cellAfterImpact: CellType = gridAfterImpact.layout[y - 1][x - 1];
@@ -116,6 +118,7 @@ export function getShotResult(
     const shipAfterImpact: ShipType =
       gridAfterImpact.ships[cellAfterImpact.shipId - 1];
     shipAfterImpact.shotCounter++;
+    shootType = "hit";
 
     // Update the shot cell inside the ship's cells
     for (let i = 0; i < shipAfterImpact.cells.length; i++) {
@@ -133,6 +136,7 @@ export function getShotResult(
     if (shipAfterImpact.shotCounter === shipAfterImpact.length) {
       shipAfterImpact.sunk = true;
       gridAfterImpact.sunkShips.push(shipAfterImpact);
+      shootType = "sink";
 
       // Mark each cell in the layout as shipSunk (with updated object)
       for (let i = 0; i < shipAfterImpact.cells.length; i++) {
@@ -152,5 +156,5 @@ export function getShotResult(
       gridAfterImpact.endGame = true;
   }
 
-  return gridAfterImpact;
+  return {grid: gridAfterImpact, shootType};
 }

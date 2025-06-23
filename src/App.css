@@ -8,7 +8,6 @@
   max-width: 1400px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
 }
 
 @theme inline {
@@ -125,4 +124,8 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.shot-toast-message {
+  gap: 20px !important;
 }
