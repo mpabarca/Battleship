@@ -43,14 +43,18 @@ So are only need it at one level (or passed once to children).
 export type SelectColumnType = { selecting: boolean; column: number };
 export type SelectRowType = { selecting: boolean; row: number };
 
+const initialValuesRow: SelectRowType = { selecting: false, row: 0 }
+const initialValuesColumn: SelectColumnType = { selecting: false, column: 0 }
+
+
 function Game() {
   const [target, setTarget] = useState<CoordinatesType>([0, 0]);
   const [grid, setGrid] = useState<GridType | null>(null);
   const [isEndGame, setIsEndGame] = useState<boolean>(false);
   const [selectingColumn, setSelectingColumn] =
-    useState<SelectColumnType>({ selecting: false, column: 0 });
+    useState<SelectColumnType>(initialValuesColumn);
   const [selectingRow, setSelectingRow] =
-    useState<SelectRowType>({ selecting: false, row: 0 });
+    useState<SelectRowType>(initialValuesRow);
 
   useEffect(() => {
     const storedGrid = localStorage.getItem("battleship-grid");
@@ -95,6 +99,9 @@ function Game() {
     localStorage.removeItem("battleship-grid");
     setTarget([0, 0]);
     setGrid(generateGrid());
+    setSelectingColumn(initialValuesColumn);
+    setSelectingRow(initialValuesRow);
+
   }
 
   return (
