@@ -47,6 +47,8 @@ function Cell({ cell, showShips, selectingColumn, selectingRow }: ICell) {
           <FlameKindling className='text-white' />
         ) : showShips ? (
           <Ship className='text-black dark:text-white' />
+        ) : isBeenSelected ? (
+          <Crosshair className='text-black' />
         ) : (
           ""
         )
