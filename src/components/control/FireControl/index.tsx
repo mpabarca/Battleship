@@ -166,6 +166,7 @@ function FireControl({
             ref={columnInputRef}
             placeholder='A'
             className='w-10 h-full border-b-2 text-center placeholder:text-center'
+            onChange={() => {}}
             onKeyDown={(e) => {
               if(!isEndGame) {
                 handleChangeKeyColumn(e);
@@ -179,6 +180,7 @@ function FireControl({
             ref={rowInputRef}
             placeholder='5'
             className='w-10 h-full border-b-2 text-center placeholder:text-center'
+            onChange={() => {}}
             onKeyDown={(e) => {
               if(!isEndGame) {
                 handleKeyNavigation(e, "inputRow");
