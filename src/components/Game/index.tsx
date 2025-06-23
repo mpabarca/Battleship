@@ -19,7 +19,6 @@ import {
   AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogFooter,
-  AlertDialogCancel,
   AlertDialogAction,
 } from "@/components/ui/AlertDialog"; // Adjust path as needed
 
@@ -151,6 +150,7 @@ function Game() {
                   Cancel
                 </AlertDialogCancel>
                 <AlertDialogAction
+                  className="w-32"
                   onClick={() => {
                     setShowEndGameDialog(false);
                     resetGame();
