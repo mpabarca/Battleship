@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/AlertDialog"; 
 import { randomMessages } from "../../services/toastMessages";
 import { getRandomInt } from "@/utils/general";
-import { shotToast } from "@/lib/shotToast";
+import { shotToast, showShipsToast } from "@/lib/shotToast";
 
 /*
 Handling Data accross project:
@@ -121,11 +121,12 @@ function Game() {
                 type='button'
                 variant={"secondary"}
                 className='h-12'
-                onClick={() =>
+                onClick={() => {
+                  showShipsToast(!grid.showShips)
                   setGrid((prev) =>
                     prev ? { ...prev, showShips: !prev.showShips } : prev
                   )
-                }
+                }}
               >
                 {`${grid.showShips ? "Hide" : "Show"} ships`}
               </Button>
