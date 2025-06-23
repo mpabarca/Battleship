@@ -230,7 +230,7 @@ export const randomMessages: randomMessagesType = {
     "You vs Ocean Again?",
     "Round 2",
     "Reboot Pain",
-    "Wanna Cry Again?",
+    "Wanna Try Again?",
     "Hit Reset",
     "Dare Again?",
     "Gonna Play Worse?",
