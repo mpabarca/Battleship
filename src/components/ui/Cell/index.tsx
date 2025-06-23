@@ -26,7 +26,7 @@ function Cell({ cell, showShips, selectingColumn, selectingRow }: ICell) {
       ? cell.shipSunk
         ? "bg-black dark:bg-blue-950"
         : "bg-red-700"
-      : "bg-orange-400/60 dark:bg-amber-600"
+      : "bg-orange-400 dark:bg-amber-600"
     : isBeenSelected
     ? "bg-yellow-400 dark:bg-teal-600"
     : couldBeSelected
