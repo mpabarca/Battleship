@@ -64,21 +64,38 @@ function FireControl({
   }
 
   function handleChangeKeyColumn(e: React.KeyboardEvent<HTMLInputElement>) {
-    const upperValue = e.key.toUpperCase();
-    if (NAVIGATION_KEYS.includes(e.key) || e.key === "Backspace") return;
+    const key = e.key;
+    const upperValue = key.toUpperCase();
 
-    if (COLUMNS_HEADER.includes(upperValue)) {
+    if (
+      COLUMNS_HEADER.includes(upperValue) ||
+      key === "Backspace" ||
+      NAVIGATION_KEYS.includes(key)
+    ) {
       e.preventDefault();
-      const updated = { ...value, inputColumn: upperValue };
-      const x = transformLetterToNumber(updated.inputColumn);
-      const y = updated.inputRow ? parseInt(updated.inputRow) : 0;
-      setValue(updated);
-      setTarget([x, y]);
-      setSelectingColumn({ selecting: true, column: x });
-      if (COLUMNS_HEADER.includes(upperValue)) rowInputRef.current?.focus();
+      if (NAVIGATION_KEYS.includes(key)) return;
+      if (key === "Backspace") {
+        setValue({ ...value, inputColumn: "" });
+        setTarget([0, parseInt(value.inputRow) || 0]);
+        setSelectingColumn({ selecting: false, column: 0 });
+        return;
+      }
+      if (/^[a-zA-Z]$/.test(key)) {
+        const updated = { ...value, inputColumn: upperValue };
+        const x = transformLetterToNumber(upperValue);
+        const y = updated.inputRow ? parseInt(updated.inputRow) : 0;
+
+        setValue(updated);
+        setTarget([x, y]);
+        setSelectingColumn({ selecting: true, column: x });
+
+        if (rowInputRef.current) rowInputRef.current.focus();
+      } else {
+        toast.error("The input can only be from A to J!");
+      }
     } else {
       e.preventDefault();
-      toast.error("The input can only be from A to J!");
+      toast.error("The input can only be a letter from A to J!");
     }
   }
 
@@ -126,7 +143,6 @@ function FireControl({
 
   function handleKeyNavigation(
     e: React.KeyboardEvent<HTMLInputElement | HTMLButtonElement>,
-    name?: keyof InputType
   ) {
     if (e.key === "Enter") {
       buttonRef.current?.click();
@@ -146,14 +162,14 @@ function FireControl({
       focusable[currentIndex - 1]?.current?.focus();
     }
 
-    if (e.key === "Backspace" && name) {
-      const cleared = { ...value, [name]: "" };
-      setValue(cleared);
-      setTarget([
-        transformLetterToNumber(cleared.inputColumn),
-        cleared.inputRow ? parseInt(cleared.inputRow) : 0,
-      ]);
-    }
+    // if (e.key === "Backspace" && name) {
+    //   const cleared = { ...value, [name]: "" };
+    //   setValue(cleared);
+    //   setTarget([
+    //     transformLetterToNumber(cleared.inputColumn),
+    //     cleared.inputRow ? parseInt(cleared.inputRow) : 0,
+    //   ]);
+    // }
   }
 
   return (
@@ -168,9 +184,9 @@ function FireControl({
             className='w-10 h-full border-b-2 text-center placeholder:text-center'
             onChange={() => {}}
             onKeyDown={(e) => {
-              if(!isEndGame) {
+              if (!isEndGame) {
                 handleChangeKeyColumn(e);
-                handleKeyNavigation(e, "inputColumn");
+                handleKeyNavigation(e);
               }
             }}
           />
@@ -182,8 +198,8 @@ function FireControl({
             className='w-10 h-full border-b-2 text-center placeholder:text-center'
             onChange={() => {}}
             onKeyDown={(e) => {
-              if(!isEndGame) {
-                handleKeyNavigation(e, "inputRow");
+              if (!isEndGame) {
+                handleKeyNavigation(e);
                 handleChangeKeyRow(e);
               }
             }}
@@ -194,7 +210,9 @@ function FireControl({
           ref={buttonRef}
           className={"w-34"}
           onClick={handleClick}
-          onKeyDown={(e) => {if(!isEndGame) handleKeyNavigation(e)}}
+          onKeyDown={(e) => {
+            if (!isEndGame) handleKeyNavigation(e);
+          }}
         >
           Fire!
         </Button>
