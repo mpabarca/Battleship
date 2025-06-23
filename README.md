@@ -121,27 +121,32 @@ There’s always room for improvement. Some ideas include:
 #### 1. Missed Shot
 
 A cell after a miss — notice the simple border and neutral feedback.
-![Missed Shot](./screenshots/cell-miss.png)
+<br />
+<img src="public/screenshots/cell-miss.png" alt="Missed Shot" height="100" />
 
 #### 2. Hit Shot
 
 A cell when part of a ship is hit — visually marked with strong contrast.
-![Hit Shot](./screenshots/cell-hit.png)
+<br />
+<img src="public/screenshots/cell-hit.png" alt="Missed Shot" height="100" />
 
 #### 3. Targeted Cell
 
 A cell currently selected by the player — shows active targeting UI.
-![Target Cell](./screenshots/cell-target.png)
+<br />
+<img src="public/screenshots/cell-target.png" alt="Missed Shot" height="100" />
 
 #### 4. Revealed Ship (Show Ships Enabled)
 
 An untouched cell that shows a ship icon after toggling the “Show Ships” option — helps visualize ship layout.  
-![Revealed Ship](./screenshots/cell-revealed-ship.png)
+<br />
+<img src="public/screenshots/cell-revealed-ship.png" alt="Missed Shot" height="100" />
 
 #### 5. Sunk Ship
 
 A ship that has been completely sunk — all cells highlighted with a sunk style.
-![Sunk Ship](./screenshots/ship-sunk.png)
+<br />
+<img src="public/screenshots/ship-sunk.png" alt="Missed Shot" height="100" />
 
 ### Deployment
 
@@ -189,4 +194,4 @@ Contributions to this project are welcome. If you have any ideas, suggestions, o
 
 This project is licensed under the [MIT License](LICENSE).
 
-// Helped by Monny, AI friend.
+_Helped by Monny, AI friend._
