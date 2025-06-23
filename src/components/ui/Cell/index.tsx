@@ -24,13 +24,13 @@ function Cell({ cell, showShips, selectingColumn, selectingRow }: ICell) {
   const bgColor = cell.shot
     ? cell.shipId
       ? cell.shipSunk
-        ? "bg-black"
+        ? "bg-black dark:bg-blue-950"
         : "bg-red-700"
-      : "bg-orange-400/60"
+      : "bg-orange-400/60 dark:bg-amber-600"
     : isBeenSelected
-    ? "bg-yellow-400"
+    ? "bg-yellow-400 dark:bg-teal-600"
     : couldBeSelected
-    ? "bg-yellow-400/30"
+    ? "bg-yellow-400/30 dark:bg-gray-500"
     : "bg-transparent";
 
   return (
@@ -38,7 +38,7 @@ function Cell({ cell, showShips, selectingColumn, selectingRow }: ICell) {
       id={`${cell.cellId}`}
       key={cell.cellId}
       className={cn(
-        "w-12 h-12 flex justify-center items-center border border-zinc-600 rounded-lg shadow-[3px_3px_0_0_black] transition-colors duration-400",
+        "w-12 h-12 flex justify-center items-center border border-zinc-600 rounded-lg shadow-[3px_3px_0_0_black] transition-colors duration-400 dark:border-white dark:shadow-[3px_3px_0_0_white]",
         bgColor
       )}
     >
@@ -48,14 +48,14 @@ function Cell({ cell, showShips, selectingColumn, selectingRow }: ICell) {
         ) : showShips ? (
           <Ship className='text-black dark:text-white' />
         ) : isBeenSelected ? (
-          <Crosshair className='text-black' />
+          <Crosshair className='text-black  dark:text-white' />
         ) : (
           ""
         )
       ) : cell.shot ? (
         <Minus className='text-white' />
       ) : isBeenSelected ? (
-        <Crosshair className='text-black' />
+        <Crosshair className='text-black dark:text-white' />
       ) : (
         ""
       )}

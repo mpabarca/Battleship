@@ -26,7 +26,7 @@ function Grid({ grid, showShips, selectingColumn, selectingRow }: IGrid) {
               "w-14 h-14 flex justify-center items-center",
               selectingRow.selecting &&
                 selectingRow.row === row &&
-                "text-yellow-400 font-bold"
+                "text-yellow-400 font-bold dark:text-sky-400"
             )}
           >
             {row}
@@ -43,7 +43,7 @@ function Grid({ grid, showShips, selectingColumn, selectingRow }: IGrid) {
                 "h-14 w-14 flex justify-center items-center",
                 selectingColumn.selecting &&
                   selectingColumn.column - 1 === index &&
-                  "text-yellow-400 font-bold"
+                  "text-yellow-400 font-bold dark:text-sky-400"
               )}
             >
               {col}
@@ -73,7 +73,7 @@ function Grid({ grid, showShips, selectingColumn, selectingRow }: IGrid) {
                 "h-14 w-14 flex justify-center items-center",
                 selectingColumn.selecting &&
                   selectingColumn.column - 1 === index &&
-                  "text-yellow-400 font-bold"
+                  "text-yellow-400 font-bold dark:text-sky-400"
               )}
             >
               {col}
@@ -90,7 +90,7 @@ function Grid({ grid, showShips, selectingColumn, selectingRow }: IGrid) {
               "w-14 h-14 flex justify-center items-center",
               selectingRow.selecting &&
                 selectingRow.row === row &&
-                "text-yellow-400 font-bold"
+                "text-yellow-400 font-bold dark:text-sky-400"
             )}
           >
             {row}
