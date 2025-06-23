@@ -7,6 +7,9 @@ const jestConfig: JestConfigWithTsJest = {
   testEnvironment: "jsdom",
   testPathIgnorePatterns: ['jest.setup.ts'],
   collectCoverage: true,
+  coveragePathIgnorePatterns: [
+    '<rootDir>/src/lib/',
+  ],
   transform: {
     '^.+\\.(ts|tsx)?$': 'ts-jest',
   },

@@ -184,7 +184,7 @@ function FireControl({
         <Button
           type='button'
           ref={buttonRef}
-          className={"w-34 h-12"}
+          className={"w-34"}
           onClick={handleClick}
           onKeyDown={(e) => handleKeyNavigation(e)}
         >

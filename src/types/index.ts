@@ -2,6 +2,7 @@ export type CoordinatesType = [number, number];
 export type OrientationType = "horizontal" | "vertical";
 export type DirectionType = "up" | "right" | "down" | "left";
 export type ShipSizeType = 4 | 5;
+export type ShootType= "miss" | "hit" | "sink" | null;
 
 export type ErrorType = {
   columnCriteria: boolean;

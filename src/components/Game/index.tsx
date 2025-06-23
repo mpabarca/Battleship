@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { CoordinatesType, GridType } from "../../types";
+import { type CoordinatesType, type GridType } from "../../types";
 import { hasCellBeenShot } from "../../utils/cell";
 import {
   generateGrid,
@@ -20,8 +20,10 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogAction,
-  AlertDialogCancel,
-} from "@/components/ui/AlertDialog";
+} from "@/components/ui/AlertDialog"; 
+import { randomMessages } from "../../services/toastMessages";
+import { getRandomInt } from "@/utils/general";
+import { shotToast } from "@/lib/shotToast";
 
 /*
 Handling Data accross project:
@@ -81,7 +83,10 @@ function Game() {
       );
       return;
     }
-    setGrid(getShotResult(grid, target));
+    const result= getShotResult(grid, target)
+    setGrid(result.grid);
+    // Show message to user after shot the target cell
+    shotToast(result.shootType)
     setSelectingColumn((prev) => ({...prev, selecting: false}));
     setSelectingRow((prev) => ({...prev, selecting: false}));
   }
@@ -143,21 +148,18 @@ function Game() {
               <AlertDialogHeader>
                 <AlertDialogTitle>Game Over</AlertDialogTitle>
                 <AlertDialogDescription>
-                  All ships have been sunk. Would you like to play again?
+                  {randomMessages.end_game[getRandomInt(0,50)]}
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel onClick={() => setShowEndGameDialog(false)}>
-                  Cancel
-                </AlertDialogCancel>
                 <AlertDialogAction
-                  className="w-32"
+                  className="px-6"
                   onClick={() => {
                     setShowEndGameDialog(false);
                     resetGame();
                   }}
                 >
-                  Restart
+                  {randomMessages.button_restart[getRandomInt(0,26)]}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
