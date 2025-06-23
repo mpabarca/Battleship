@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import type { SelectColumnType, SelectRowType } from "@/components/Game";
 
 interface IFireControl {
+  isEndGame: boolean;
   target: CoordinatesType | [0, 0];
   setTarget: React.Dispatch<React.SetStateAction<CoordinatesType>>;
   handleFire: () => void;
@@ -37,6 +38,7 @@ const NAVIGATION_KEYS: string[] = [
 ];
 
 function FireControl({
+  isEndGame,
   target,
   setTarget,
   handleFire,
@@ -165,8 +167,10 @@ function FireControl({
             placeholder='A'
             className='w-10 h-full border-b-2 text-center placeholder:text-center'
             onKeyDown={(e) => {
-              handleChangeKeyColumn(e);
-              handleKeyNavigation(e, "inputColumn");
+              if(!isEndGame) {
+                handleChangeKeyColumn(e);
+                handleKeyNavigation(e, "inputColumn");
+              }
             }}
           />
           <Input
@@ -176,8 +180,10 @@ function FireControl({
             placeholder='5'
             className='w-10 h-full border-b-2 text-center placeholder:text-center'
             onKeyDown={(e) => {
-              handleKeyNavigation(e, "inputRow");
-              handleChangeKeyRow(e);
+              if(!isEndGame) {
+                handleKeyNavigation(e, "inputRow");
+                handleChangeKeyRow(e);
+              }
             }}
           />
         </div>
@@ -186,7 +192,7 @@ function FireControl({
           ref={buttonRef}
           className={"w-34"}
           onClick={handleClick}
-          onKeyDown={(e) => handleKeyNavigation(e)}
+          onKeyDown={(e) => {if(!isEndGame) handleKeyNavigation(e)}}
         >
           Fire!
         </Button>

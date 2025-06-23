@@ -46,7 +46,7 @@ export type SelectRowType = { selecting: boolean; row: number };
 function Game() {
   const [target, setTarget] = useState<CoordinatesType>([0, 0]);
   const [grid, setGrid] = useState<GridType | null>(null);
-  const [showEndGameDialog, setShowEndGameDialog] = useState<boolean>(false);
+  const [isEndGame, setIsEndGame] = useState<boolean>(false);
   const [selectingColumn, setSelectingColumn] =
     useState<SelectColumnType>({ selecting: false, column: 0 });
   const [selectingRow, setSelectingRow] =
@@ -69,7 +69,7 @@ function Game() {
 
   useEffect(() => {
     if (grid?.endGame) {
-      setShowEndGameDialog(true);
+      setIsEndGame(true);
     }
   }, [grid?.endGame]);
 
@@ -132,6 +132,7 @@ function Game() {
             </div>
             <div className='flex flex-col gap-10 w-60 h-full'>
               <FireControl
+                isEndGame={isEndGame}
                 target={target}
                 setTarget={setTarget}
                 handleFire={handleFire}
@@ -141,8 +142,8 @@ function Game() {
             </div>
           </div>
           <AlertDialog
-            open={showEndGameDialog}
-            onOpenChange={setShowEndGameDialog}
+            open={isEndGame}
+            onOpenChange={setIsEndGame}
           >
             <AlertDialogContent>
               <AlertDialogHeader>
@@ -155,7 +156,7 @@ function Game() {
                 <AlertDialogAction
                   className="px-6"
                   onClick={() => {
-                    setShowEndGameDialog(false);
+                    setIsEndGame(false);
                     resetGame();
                   }}
                 >
