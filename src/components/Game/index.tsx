@@ -12,7 +12,7 @@ import {
 } from "../../utils/game";
 import FireControl from "../control/FireControl";
 import Grid from "../ui/Grid";
-import { Button } from "../ui/shadcn/Button";
+import { Button } from "@/components/shadcn/Button";
 import EndGameAlertDialog from "../ui/EndGameAlertDialog";
 
 /*

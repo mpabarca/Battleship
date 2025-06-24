@@ -1,6 +1,6 @@
 import type { SelectColumnType, SelectRowType } from "@/components/Game";
-import { Input } from "@/components/ui/shadcn/Input";
-import { Button } from "@/components/ui/shadcn/Button";
+import { Input } from "@/components/shadcn/Input";
+import { Button } from "@/components/shadcn/Button";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import type { CoordinatesType } from "../../../types";

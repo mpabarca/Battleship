@@ -6,7 +6,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/shadcn/AlertDialog";
+} from "@/components/shadcn/AlertDialog";
 import { getRandomInt } from "@/utils/general";
 import { randomMessages } from "@/services/toastMessages";
 
