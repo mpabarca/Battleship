@@ -1,19 +1,8 @@
 "use client";
 
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/shadcn/AlertDialog";
 import { shotToast, showShipsToast } from "@/lib/shotToast";
-import { getRandomInt } from "@/utils/general";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { randomMessages } from "../../services/toastMessages";
 import { type CoordinatesType, type GridType } from "../../types";
 import { hasCellBeenShot } from "../../utils/cell";
 import {
@@ -24,6 +13,7 @@ import {
 import FireControl from "../control/FireControl";
 import Grid from "../ui/Grid";
 import { Button } from "../ui/shadcn/Button";
+import EndGameAlertDialog from "../ui/EndGameAlertDialog";
 
 /*
 Handling Data accross project:
@@ -43,9 +33,8 @@ So are only need it at one level (or passed once to children).
 export type SelectColumnType = { selecting: boolean; column: number };
 export type SelectRowType = { selecting: boolean; row: number };
 
-const initialValuesRow: SelectRowType = { selecting: false, row: 0 }
-const initialValuesColumn: SelectColumnType = { selecting: false, column: 0 }
-
+const initialValuesRow: SelectRowType = { selecting: false, row: 0 };
+const initialValuesColumn: SelectColumnType = { selecting: false, column: 0 };
 
 function Game() {
   const [target, setTarget] = useState<CoordinatesType>([0, 0]);
@@ -87,12 +76,12 @@ function Game() {
       );
       return;
     }
-    const result= getShotResult(grid, target)
+    const result = getShotResult(grid, target);
     setGrid(result.grid);
     // Show message to user after shot the target cell
-    shotToast(result.shootType)
-    setSelectingColumn((prev) => ({...prev, selecting: false}));
-    setSelectingRow((prev) => ({...prev, selecting: false}));
+    shotToast(result.shootType);
+    setSelectingColumn((prev) => ({ ...prev, selecting: false }));
+    setSelectingRow((prev) => ({ ...prev, selecting: false }));
   }
 
   function resetGame() {
@@ -101,7 +90,6 @@ function Game() {
     setGrid(generateGrid());
     setSelectingColumn(initialValuesColumn);
     setSelectingRow(initialValuesRow);
-
   }
 
   return (
@@ -117,7 +105,9 @@ function Game() {
           <div className='flex flex-col order-first xl:order-last h-full gap-20 justify-between'>
             <div>
               <h1>Sink It!</h1>
-              <i className="text-gray-300 dark:text-gray-400">A snarky Battleship Game</i>
+              <i className='text-gray-300 dark:text-gray-400'>
+                A snarky Battleship Game
+              </i>
             </div>
             <div className='flex flex-col gap-6'>
               <Button
@@ -133,10 +123,10 @@ function Game() {
                 variant={"secondary"}
                 className='h-12'
                 onClick={() => {
-                  showShipsToast(!grid.showShips)
+                  showShipsToast(!grid.showShips);
                   setGrid((prev) =>
                     prev ? { ...prev, showShips: !prev.showShips } : prev
-                  )
+                  );
                 }}
               >
                 {`${grid.showShips ? "Hide" : "Show"} ships`}
@@ -153,30 +143,11 @@ function Game() {
               />
             </div>
           </div>
-          <AlertDialog
-            open={isEndGame}
-            onOpenChange={setIsEndGame}
-          >
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Game Over</AlertDialogTitle>
-                <AlertDialogDescription>
-                  {randomMessages.end_game[getRandomInt(0,50)]}
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogAction
-                  className="px-6"
-                  onClick={() => {
-                    setIsEndGame(false);
-                    resetGame();
-                  }}
-                >
-                  {randomMessages.button_restart[getRandomInt(0,26)]}
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+          <EndGameAlertDialog
+            isEndGame={isEndGame}
+            setIsEndGame={setIsEndGame}
+            resetGame={resetGame}
+          />
         </div>
       ) : (
         <div className='flex flex-row items-center gap-20'>
