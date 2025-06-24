@@ -1,6 +1,19 @@
 "use client";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/shadcn/AlertDialog";
+import { shotToast, showShipsToast } from "@/lib/shotToast";
+import { getRandomInt } from "@/utils/general";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { randomMessages } from "../../services/toastMessages";
 import { type CoordinatesType, type GridType } from "../../types";
 import { hasCellBeenShot } from "../../utils/cell";
 import {
@@ -10,20 +23,7 @@ import {
 } from "../../utils/game";
 import FireControl from "../control/FireControl";
 import Grid from "../ui/Grid";
-import { Button } from "../ui/Button";
-import { toast } from "sonner";
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogAction,
-} from "@/components/ui/AlertDialog"; 
-import { randomMessages } from "../../services/toastMessages";
-import { getRandomInt } from "@/utils/general";
-import { shotToast, showShipsToast } from "@/lib/shotToast";
+import { Button } from "../ui/shadcn/Button";
 
 /*
 Handling Data accross project:

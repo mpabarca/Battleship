@@ -1,14 +1,14 @@
+import type { SelectColumnType, SelectRowType } from "@/components/Game";
+import { Input } from "@/components/ui/shadcn/Input";
+import { Button } from "@/components/ui/shadcn/Button";
 import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 import type { CoordinatesType } from "../../../types";
 import {
   COLUMNS_HEADER,
   ROWS_HEADER,
   transformLetterToNumber,
 } from "../../../utils/game";
-import { Input } from "@/components/ui/Input";
-import { Button } from "@/components/ui/Button";
-import { toast } from "sonner";
-import type { SelectColumnType, SelectRowType } from "@/components/Game";
 
 interface IFireControl {
   isEndGame: boolean;
