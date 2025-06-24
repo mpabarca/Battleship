@@ -119,12 +119,12 @@
     @apply bg-background text-foreground;
   }
   #root {
-    @apply max-w-screen-xl mx-auto p-8 w-full h-full;
+    @apply max-w-screen-xl mx-auto p-8 w-full h-full flex items-center;
   }
 
   @media (max-width: 767.98px) {
     #root {
-      @apply p-4;
+      @apply px-4 py-8 items-start;
     }
   }
 }
