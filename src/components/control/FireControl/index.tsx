@@ -161,27 +161,18 @@ function FireControl({
     } else if (e.key === "ArrowLeft" && currentIndex > 0) {
       focusable[currentIndex - 1]?.current?.focus();
     }
-
-    // if (e.key === "Backspace" && name) {
-    //   const cleared = { ...value, [name]: "" };
-    //   setValue(cleared);
-    //   setTarget([
-    //     transformLetterToNumber(cleared.inputColumn),
-    //     cleared.inputRow ? parseInt(cleared.inputRow) : 0,
-    //   ]);
-    // }
   }
 
   return (
     <>
-      <div className='flex gap-2 items-center justify-between'>
+      <div className='flex gap-2 items-center justify-end xl:justify-between'>
         <div className='flex gap-2 h-12'>
           <Input
             name='inputColumn'
             value={value?.inputColumn}
             ref={columnInputRef}
             placeholder='A'
-            className='w-10 h-full border-b-2 text-center placeholder:text-center'
+            className='w-12 h-full border-b-2 text-center placeholder:text-center'
             onChange={() => {}}
             onKeyDown={(e) => {
               if (!isEndGame) {
@@ -195,7 +186,7 @@ function FireControl({
             value={value?.inputRow}
             ref={rowInputRef}
             placeholder='5'
-            className='w-10 h-full border-b-2 text-center placeholder:text-center'
+            className='w-12 h-full border-b-2 text-center placeholder:text-center'
             onChange={() => {}}
             onKeyDown={(e) => {
               if (!isEndGame) {

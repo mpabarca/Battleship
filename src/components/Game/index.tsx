@@ -95,33 +95,33 @@ function Game() {
   return (
     <>
       {grid ? (
-        <div className='flex flex-col xl:flex-row h-full gap-14 xl:gap-24'>
+        <div className='flex flex-col xl:flex-row justify-between gap-10 md:gap-12 xl:gap-0 w-full'>
           <Grid
             grid={grid}
             showShips={grid.showShips}
             selectingColumn={selectingColumn}
             selectingRow={selectingRow}
           />
-          <div className='flex flex-col order-first xl:order-last h-full gap-20 justify-between'>
-            <div>
+          <div className='w-full xl:w-70 flex flex-col md:flex-row xl:flex-col items-center justify-between order-first xl:order-last gap-10 md:gap-12'>
+            <div id="battleship-title" className=" flex flex-col items-start w-full md:w-1/3 xl:w-full">
               <h1>Sink It!</h1>
               <i className='text-gray-300 dark:text-gray-400'>
                 A snarky Battleship Game
               </i>
             </div>
-            <div className='flex flex-col gap-6'>
+            <div id="setting-buttons" className='flex flex-col lg:flex-row xl:flex-col gap-2 xl:gap-6  w-full md:w-1/3 xl:w-full justify-between'>
               <Button
                 type='button'
                 variant={"secondary"}
                 onClick={resetGame}
-                className='h-12'
+                className='h-12 lg:w-30 xl:w-full'
               >
                 Reset game
               </Button>
               <Button
                 type='button'
                 variant={"secondary"}
-                className='h-12'
+                className='h-12 lg:w-30 xl:w-full'
                 onClick={() => {
                   showShipsToast(!grid.showShips);
                   setGrid((prev) =>
@@ -132,7 +132,7 @@ function Game() {
                 {`${grid.showShips ? "Hide" : "Show"} ships`}
               </Button>
             </div>
-            <div className='flex flex-col gap-10 w-60 h-full'>
+            <div id="fire-control"  className='flex flex-col gap-10  w-full md:w-1/3 xl:w-full h-full'>
               <FireControl
                 isEndGame={isEndGame}
                 target={target}
