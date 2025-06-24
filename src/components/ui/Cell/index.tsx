@@ -32,6 +32,10 @@ function Cell({ cell, showShips, selectingColumn, selectingRow }: ICell) {
     : couldBeSelected
     ? "bg-yellow-400/30 dark:bg-gray-500"
     : "bg-transparent";
+  
+  const sizeIcon = "w-[18px] h-[18px] md:w-[26px] md:h-[26px]"
+  const whiteIcon = `text-white ${sizeIcon}`;
+  const blackIcon = `text-black dark:text-white ${sizeIcon}`;
 
   return (
     <div
@@ -44,18 +48,18 @@ function Cell({ cell, showShips, selectingColumn, selectingRow }: ICell) {
     >
       {cell.shipId ? (
         cell.shot ? (
-          <FlameKindling className='text-white' />
+          <FlameKindling className={whiteIcon} />
         ) : showShips ? (
-          <Ship className='text-black dark:text-white' />
+          <Ship className={blackIcon} />
         ) : isBeenSelected ? (
-          <Crosshair className='text-black  dark:text-white' />
+          <Crosshair className={blackIcon} />
         ) : (
           ""
         )
       ) : cell.shot ? (
-        <Minus className='text-white' />
+        <Minus className={whiteIcon} />
       ) : isBeenSelected ? (
-        <Crosshair className='text-black dark:text-white' />
+        <Crosshair className={blackIcon} />
       ) : (
         ""
       )}
