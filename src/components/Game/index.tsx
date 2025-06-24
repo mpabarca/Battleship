@@ -94,21 +94,21 @@ function Game() {
     setSelectingRow(initialValuesRow);
   }
 
-  function handleMobileSettings() {
-    setOpenSettingsDialog((openSettingsDialog) => !openSettingsDialog);
-  }
+  // function handleMobileSettings() {
+  //   setOpenSettingsDialog((openSettingsDialog) => !openSettingsDialog);
+  // }
 
   return (
     <>
       {grid ? (
-        <div className='flex flex-col xl:flex-row h-full gap-14 xl:gap-24'>
+        <div className='flex flex-col xl:flex-row justify-between gap-10 md:gap-12 xl:gap-0'>
           <Grid
             grid={grid}
             showShips={grid.showShips}
             selectingColumn={selectingColumn}
             selectingRow={selectingRow}
           />
-          <div className='flex flex-col order-first xl:order-last h-full gap-20 justify-between'>
+          <div className='flex flex-col order-first xl:order-last h-full gap-10 md:gap-12 justify-between'>
             <div className='flex flex-row justify-between items-center'>
               <div>
                 <h1>Sink It!</h1>
@@ -116,16 +116,16 @@ function Game() {
                   A snarky Battleship Game
                 </i>
               </div>
-              <Button
+              {/* <Button
                 className='flex xl:hidden px-12'
                 variant={"secondary"}
                 type='button'
                 onClick={handleMobileSettings}
               >
                 Open Settings
-              </Button>
+              </Button> */}
             </div>
-            <div className='hidden flex-col gap-6 xl:flex'>
+            <div className='flex flex-col gap-6 '>
               <Button
                 type='button'
                 variant={"secondary"}

@@ -38,7 +38,7 @@ function Cell({ cell, showShips, selectingColumn, selectingRow }: ICell) {
       id={`${cell.cellId}`}
       key={cell.cellId}
       className={cn(
-        "w-12 h-12 flex justify-center items-center border border-zinc-600 rounded-lg shadow-[3px_3px_0_0_black] transition-colors duration-400 dark:border-white dark:shadow-[3px_3px_0_0_white]",
+        "w-6 h-6 md:w-12 md:h-12 flex justify-center items-center border border-zinc-600 rounded md:rounded-lg shadow-[2px_2px_0_0_black] md:shadow-[3px_3px_0_0_black] transition-colors duration-400 dark:border-white dark:shadow-[3px_3px_0_0_white] dark:md:shadow-[2px_2px_0_0_black]",
         bgColor
       )}
     >

@@ -118,12 +118,15 @@
   body {
     @apply bg-background text-foreground;
   }
-}
+  #root {
+    @apply max-w-screen-xl mx-auto p-8 w-full h-full;
+  }
 
-#root {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 2rem;
+  @media (max-width: 767.98px) {
+    #root {
+      @apply p-4;
+    }
+  }
 }
 
 .shot-toast-message {
