@@ -115,6 +115,10 @@ function Game() {
             selectingRow={selectingRow}
           />
           <div className='flex flex-col h-full gap-20 justify-between'>
+            <div>
+              <h1>Sink It!</h1>
+              <i className="text-gray-300 dark:text-gray-400">A snarky Battleship Game</i>
+            </div>
             <div className='flex flex-col gap-6'>
               <Button
                 type='button'
