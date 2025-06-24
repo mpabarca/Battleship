@@ -14,6 +14,7 @@ import FireControl from "../control/FireControl";
 import Grid from "../ui/Grid";
 import { Button } from "@/components/shadcn/Button";
 import EndGameAlertDialog from "../ui/EndGameAlertDialog";
+import SettingsCommand from "../ui/SettingsCommand";
 
 /*
 Handling Data accross project:
@@ -44,6 +45,7 @@ function Game() {
     useState<SelectColumnType>(initialValuesColumn);
   const [selectingRow, setSelectingRow] =
     useState<SelectRowType>(initialValuesRow);
+  const [openSettingsDialog, setOpenSettingsDialog] = useState<boolean>(false);
 
   useEffect(() => {
     const storedGrid = localStorage.getItem("battleship-grid");
@@ -92,6 +94,10 @@ function Game() {
     setSelectingRow(initialValuesRow);
   }
 
+  function handleMobileSettings() {
+    setOpenSettingsDialog((openSettingsDialog) => !openSettingsDialog);
+  }
+
   return (
     <>
       {grid ? (
@@ -103,13 +109,23 @@ function Game() {
             selectingRow={selectingRow}
           />
           <div className='flex flex-col order-first xl:order-last h-full gap-20 justify-between'>
-            <div>
-              <h1>Sink It!</h1>
-              <i className='text-gray-300 dark:text-gray-400'>
-                A snarky Battleship Game
-              </i>
+            <div className='flex flex-row justify-between items-center'>
+              <div>
+                <h1>Sink It!</h1>
+                <i className='text-gray-300 dark:text-gray-400'>
+                  A snarky Battleship Game
+                </i>
+              </div>
+              <Button
+                className='flex xl:hidden px-12'
+                variant={"secondary"}
+                type='button'
+                onClick={handleMobileSettings}
+              >
+                Open Settings
+              </Button>
             </div>
-            <div className='flex flex-col gap-6'>
+            <div className='hidden flex-col gap-6 xl:flex'>
               <Button
                 type='button'
                 variant={"secondary"}
@@ -132,7 +148,7 @@ function Game() {
                 {`${grid.showShips ? "Hide" : "Show"} ships`}
               </Button>
             </div>
-            <div className='flex flex-col gap-10 w-60 h-full'>
+            <div id="fire-control"  className='flex flex-col gap-10 w-full xl:w-60 h-full'>
               <FireControl
                 isEndGame={isEndGame}
                 target={target}
@@ -147,6 +163,13 @@ function Game() {
             isEndGame={isEndGame}
             setIsEndGame={setIsEndGame}
             resetGame={resetGame}
+          />
+          <SettingsCommand
+            openSettingsDialog={openSettingsDialog}
+            setOpenSettingsDialog={setOpenSettingsDialog}
+            setGrid={setGrid}
+            resetGame={resetGame}
+            showShips={grid.showShips}
           />
         </div>
       ) : (
