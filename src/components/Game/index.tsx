@@ -107,14 +107,14 @@ function Game() {
   return (
     <>
       {grid ? (
-        <div className='flex flex-row h-full gap-24'>
+        <div className='flex flex-col xl:flex-row h-full gap-14 xl:gap-24'>
           <Grid
             grid={grid}
             showShips={grid.showShips}
             selectingColumn={selectingColumn}
             selectingRow={selectingRow}
           />
-          <div className='flex flex-col h-full gap-20 justify-between'>
+          <div className='flex flex-col order-first xl:order-last h-full gap-20 justify-between'>
             <div>
               <h1>Sink It!</h1>
               <i className="text-gray-300 dark:text-gray-400">A snarky Battleship Game</i>
