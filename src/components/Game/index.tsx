@@ -14,7 +14,6 @@ import FireControl from "../control/FireControl";
 import Grid from "../ui/Grid";
 import { Button } from "@/components/shadcn/Button";
 import EndGameAlertDialog from "../ui/EndGameAlertDialog";
-import SettingsCommand from "../ui/SettingsCommand";
 
 /*
 Handling Data accross project:
@@ -45,7 +44,6 @@ function Game() {
     useState<SelectColumnType>(initialValuesColumn);
   const [selectingRow, setSelectingRow] =
     useState<SelectRowType>(initialValuesRow);
-  const [openSettingsDialog, setOpenSettingsDialog] = useState<boolean>(false);
 
   useEffect(() => {
     const storedGrid = localStorage.getItem("battleship-grid");
@@ -94,10 +92,6 @@ function Game() {
     setSelectingRow(initialValuesRow);
   }
 
-  // function handleMobileSettings() {
-  //   setOpenSettingsDialog((openSettingsDialog) => !openSettingsDialog);
-  // }
-
   return (
     <>
       {grid ? (
@@ -116,14 +110,6 @@ function Game() {
                   A snarky Battleship Game
                 </i>
               </div>
-              {/* <Button
-                className='flex xl:hidden px-12'
-                variant={"secondary"}
-                type='button'
-                onClick={handleMobileSettings}
-              >
-                Open Settings
-              </Button> */}
             </div>
             <div className='flex flex-col gap-6 '>
               <Button
@@ -163,13 +149,6 @@ function Game() {
             isEndGame={isEndGame}
             setIsEndGame={setIsEndGame}
             resetGame={resetGame}
-          />
-          <SettingsCommand
-            openSettingsDialog={openSettingsDialog}
-            setOpenSettingsDialog={setOpenSettingsDialog}
-            setGrid={setGrid}
-            resetGame={resetGame}
-            showShips={grid.showShips}
           />
         </div>
       ) : (
