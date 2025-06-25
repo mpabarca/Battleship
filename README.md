@@ -115,7 +115,7 @@ There’s always room for improvement. Some ideas include:
 ## Design/UI
 
 - Part of the design use as inspiration the web design of [Adam Ruthendorf-Przewoski on Figma](https://www.figma.com/community/file/949373440973748315).
-- The MVP version of the game only works on desktop => _Coming soon: Mobile (phone and tablet)_
+- The MVP version of the game works for any device size, but thought to be mainly use on desktop.
 - The game has dark/light mode incorporated automatically based on your system preferences.
 - The `FireControl` interface was designed to support keyboard-first interaction on desktop:
   - Players can navigate inputs using ArrowLeft / ArrowRight.
