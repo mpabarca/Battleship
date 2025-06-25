@@ -2,7 +2,7 @@
 
 A simple, browser-based version of the classic Battleship game. Play solo against a snarky and slightly rude computer program that places ships randomly on a 10×10 grid.
 
-## 🧩 How It Works
+## How It Works
 
 - **Grid:** 10 rows × 10 columns (A–J, 1–10)
 - **Ships:**
