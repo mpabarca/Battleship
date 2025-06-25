@@ -169,6 +169,7 @@ function FireControl({
         <div className='flex gap-2 h-12'>
           <Input
             name='inputColumn'
+            type="text"
             value={value?.inputColumn}
             ref={columnInputRef}
             placeholder='A'
@@ -183,6 +184,8 @@ function FireControl({
           />
           <Input
             name='inputRow'
+            type="number"
+            inputMode="numeric"
             value={value?.inputRow}
             ref={rowInputRef}
             placeholder='5'
