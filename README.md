@@ -31,6 +31,12 @@ To run the project locally, follow these steps:
 3. Start the development server: `npm run dev`
 4. Open [http://localhost:5173](http://localhost:5173) in your browser.
 
+## Project Management
+
+To keep the workflow clear and organized, I followed a Kanban-style methodology using GitHub Projects to plan, track, and prioritize tasks throughout development.
+This helped me break down the work into actionable steps, stay focused, and document the full scope of the implementation — just like I would on a real-world team project.
+You can check the board [here](https://github.com/users/mpabarca/projects/3).
+
 ## Tech Stack
 
 Because of the game's scope, the program was built using:
