@@ -89,7 +89,7 @@ Key pieces of state include:
 
 This setup promotes clarity while keeping reactivity smooth between components.
 
-### 💾 Data Persistence
+### Data Persistence
 
 - The grid state (`grid`) is persisted in **`localStorage`** under `battleship-grid`.
 - On mount, the app checks if a previous game exists and restores it.
